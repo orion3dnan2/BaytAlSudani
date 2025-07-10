@@ -87,7 +87,7 @@ export default function Landing() {
                 <Button 
                   size="lg" 
                   className="bg-sudan-gold hover:bg-sudan-gold/90 text-gray-900 text-lg px-8 py-6 shadow-lg"
-                  onClick={() => window.location.href = '/api/login'}
+                  onClick={() => window.location.href = '/auth/login'}
                 >
                   <ShoppingBag className="w-5 h-5 mr-2" />
                   سجل دخول للتسوق
@@ -96,7 +96,7 @@ export default function Landing() {
                   size="lg" 
                   variant="outline" 
                   className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6 bg-[#3c445c]"
-                  onClick={() => window.location.href = '/api/login'}
+                  onClick={() => window.location.href = '/auth/login'}
                 >
                   <Users className="w-5 h-5 mr-2" />
                   انضم كتاجر
@@ -166,7 +166,7 @@ export default function Landing() {
             <Button 
               size="lg" 
               className="bg-white text-sudan-blue hover:bg-gray-100 text-lg px-8 py-6"
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => window.location.href = '/auth/login'}
             >
               سجل دخول الآن
               <ArrowRight className="w-5 h-5 ml-2" />
