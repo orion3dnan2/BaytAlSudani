@@ -1,4 +1,4 @@
-import { users, stores, products, services, jobs, announcements, type User, type InsertUser, type Store, type InsertStore, type Product, type InsertProduct, type Service, type InsertService, type Job, type InsertJob, type Announcement, type InsertAnnouncement } from "@shared/schema";
+import { users, legacyUsers, stores, products, services, jobs, announcements, type User, type UpsertUser, type InsertUser, type Store, type InsertStore, type Product, type InsertProduct, type Service, type InsertService, type Job, type InsertJob, type Announcement, type InsertAnnouncement } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
 // Database imports for DatabaseStorage class
@@ -8,8 +8,13 @@ import bcrypt from "bcryptjs";
 import { db } from "./db";
 
 export interface IStorage {
-  // Users
-  getUser(id: number): Promise<User | undefined>;
+  // User operations
+  // (IMPORTANT) these user operations are mandatory for Replit Auth.
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
+  
+  // Legacy user operations (for existing system)
+  getLegacyUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -19,7 +24,7 @@ export interface IStorage {
   
   // Stores
   getStore(id: number): Promise<Store | undefined>;
-  getStoresByOwner(ownerId: number): Promise<Store[]>;
+  getStoresByOwner(ownerId: string): Promise<Store[]>;
   getStoresByCategory(category: string): Promise<Store[]>;
   getAllStores(): Promise<Store[]>;
   createStore(store: InsertStore): Promise<Store>;
@@ -187,8 +192,32 @@ export class MemStorage implements IStorage {
     this.nextId = 4; // Start from 4 since we have 3 initial users
   }
 
-  // Users
-  async getUser(id: number): Promise<User | undefined> {
+  // User operations
+  // (IMPORTANT) these user operations are mandatory for Replit Auth.
+
+  async getUser(id: string): Promise<User | undefined> {
+    // For Replit Auth, users have string IDs
+    return undefined; // Not implemented in memory storage
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    // For Replit Auth, upsert user data
+    const user: User = {
+      id: userData.id,
+      email: userData.email,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      profileImageUrl: userData.profileImageUrl,
+      role: userData.role || 'user',
+      createdAt: userData.createdAt || new Date(),
+      updatedAt: new Date(),
+    };
+    // In memory storage, we don't actually store Replit users
+    return user;
+  }
+
+  // Legacy user operations
+  async getLegacyUser(id: number): Promise<User | undefined> {
     return this.users.find(u => u.id === id);
   }
 
@@ -241,7 +270,7 @@ export class MemStorage implements IStorage {
     return this.stores.find(s => s.id === id);
   }
 
-  async getStoresByOwner(ownerId: number): Promise<Store[]> {
+  async getStoresByOwner(ownerId: string): Promise<Store[]> {
     return this.stores.filter(s => s.ownerId === ownerId);
   }
 
@@ -467,9 +496,32 @@ export class MemStorage implements IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  // Users
-  async getUser(id: number): Promise<User | undefined> {
+  // User operations
+  // (IMPORTANT) these user operations are mandatory for Replit Auth.
+
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
+  }
+
+  // Legacy user operations (for existing system)
+  async getLegacyUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.id, id));
     return user || undefined;
   }
 
@@ -515,7 +567,7 @@ export class DatabaseStorage implements IStorage {
     return store || undefined;
   }
 
-  async getStoresByOwner(ownerId: number): Promise<Store[]> {
+  async getStoresByOwner(ownerId: string): Promise<Store[]> {
     return await db.select().from(stores).where(eq(stores.ownerId, ownerId));
   }
 

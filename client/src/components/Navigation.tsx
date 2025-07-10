@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   Search, 
   ShoppingCart, 
@@ -32,7 +32,7 @@ export default function Navigation() {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const navItems = [
     { href: '/', label: 'الرئيسية', icon: Home },
@@ -119,7 +119,7 @@ export default function Navigation() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-sudan-blue text-white">
-                        {user?.fullName?.charAt(0) || 'م'}
+                        {user?.firstName?.charAt(0) || user?.email?.charAt(0) || 'م'}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -127,7 +127,7 @@ export default function Navigation() {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
-                      <p className="font-medium">{user?.fullName}</p>
+                      <p className="font-medium">{user?.firstName} {user?.lastName}</p>
                       <p className="w-[200px] truncate text-sm text-muted-foreground">
                         {user?.email}
                       </p>
@@ -142,22 +142,22 @@ export default function Navigation() {
                   </DropdownMenuItem>
                   {user?.role === 'admin' && (
                     <DropdownMenuItem asChild>
-                      <Link href="/admin" className="w-full">
+                      <Link href="/admin/dashboard" className="w-full">
                         <Settings className="mr-2 h-4 w-4" />
                         <span>لوحة الإدارة</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  {user?.role === 'store_owner' && (
+                  {user?.role === 'merchant' && (
                     <DropdownMenuItem asChild>
-                      <Link href="/merchant" className="w-full">
+                      <Link href="/merchant/dashboard" className="w-full">
                         <Store className="mr-2 h-4 w-4" />
                         <span>لوحة التاجر</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout}>
+                  <DropdownMenuItem onClick={() => window.location.href = '/api/logout'}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>تسجيل الخروج</span>
                   </DropdownMenuItem>
@@ -165,11 +165,11 @@ export default function Navigation() {
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2 space-x-reverse">
-                <Button variant="ghost" asChild>
-                  <Link href="/login">تسجيل الدخول</Link>
-                </Button>
-                <Button className="bg-sudan-blue hover:bg-sudan-blue/90" asChild>
-                  <Link href="/register">إنشاء حساب</Link>
+                <Button 
+                  className="bg-sudan-blue hover:bg-sudan-blue/90"
+                  onClick={() => window.location.href = '/api/login'}
+                >
+                  تسجيل الدخول
                 </Button>
               </div>
             )}
