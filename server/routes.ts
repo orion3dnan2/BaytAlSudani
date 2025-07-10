@@ -108,6 +108,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get products by store
+  app.get('/api/products/store/:storeId', async (req, res) => {
+    try {
+      const storeId = parseInt(req.params.storeId);
+      const products = await storage.getProductsByStore(storeId);
+      res.json(products);
+    } catch (error) {
+      console.error('Get products by store error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   app.post('/api/products', authenticateToken, requireStoreOwner, async (req: AuthenticatedRequest, res) => {
     try {
       const validatedData = insertProductSchema.parse(req.body);
@@ -140,6 +152,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(service);
     } catch (error) {
       console.error('Get service error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Get services by store
+  app.get('/api/services/store/:storeId', async (req, res) => {
+    try {
+      const storeId = parseInt(req.params.storeId);
+      const services = await storage.getServicesByStore(storeId);
+      res.json(services);
+    } catch (error) {
+      console.error('Get services by store error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   });
@@ -180,6 +204,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get jobs by store
+  app.get('/api/jobs/store/:storeId', async (req, res) => {
+    try {
+      const storeId = parseInt(req.params.storeId);
+      const jobs = await storage.getJobsByStore(storeId);
+      res.json(jobs);
+    } catch (error) {
+      console.error('Get jobs by store error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   app.post('/api/jobs', authenticateToken, requireStoreOwner, async (req: AuthenticatedRequest, res) => {
     try {
       const validatedData = insertJobSchema.parse(req.body);
@@ -212,6 +248,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(announcement);
     } catch (error) {
       console.error('Get announcement error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Get announcements by store
+  app.get('/api/announcements/store/:storeId', async (req, res) => {
+    try {
+      const storeId = parseInt(req.params.storeId);
+      const announcements = await storage.getAnnouncementsByStore(storeId);
+      res.json(announcements);
+    } catch (error) {
+      console.error('Get announcements by store error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   });

@@ -177,12 +177,13 @@ export default function AdminDashboard() {
                           <th className="border border-gray-300 p-2 text-right">العنوان</th>
                           <th className="border border-gray-300 p-2 text-right">الحالة</th>
                           <th className="border border-gray-300 p-2 text-right">تاريخ الإنشاء</th>
+                          <th className="border border-gray-300 p-2 text-right">الإجراءات</th>
                         </tr>
                       </thead>
                       <tbody>
                         {stores.map((store: any) => (
                           <tr key={store.id} className="hover:bg-gray-50">
-                            <td className="border border-gray-300 p-2">{store.name}</td>
+                            <td className="border border-gray-300 p-2 font-medium">{store.name}</td>
                             <td className="border border-gray-300 p-2">{store.category}</td>
                             <td className="border border-gray-300 p-2">{store.address}</td>
                             <td className="border border-gray-300 p-2">
@@ -192,6 +193,14 @@ export default function AdminDashboard() {
                             </td>
                             <td className="border border-gray-300 p-2">
                               {new Date(store.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              <a 
+                                href={`/admin/stores/${store.id}`}
+                                className="inline-flex items-center px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                              >
+                                عرض التفاصيل
+                              </a>
                             </td>
                           </tr>
                         ))}
