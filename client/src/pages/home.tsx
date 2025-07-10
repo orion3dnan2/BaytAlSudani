@@ -82,14 +82,14 @@ export default function Home() {
   ];
 
   const categories = [
-    { name: "الإلكترونيات", icon: "📱", color: "bg-blue-100 text-blue-800" },
-    { name: "الأزياء", icon: "👕", color: "bg-pink-100 text-pink-800" },
-    { name: "المنزل والحديقة", icon: "🏠", color: "bg-green-100 text-green-800" },
-    { name: "الصحة والجمال", icon: "💄", color: "bg-purple-100 text-purple-800" },
-    { name: "الرياضة", icon: "⚽", color: "bg-orange-100 text-orange-800" },
-    { name: "الكتب", icon: "📚", color: "bg-indigo-100 text-indigo-800" },
-    { name: "الألعاب", icon: "🎮", color: "bg-red-100 text-red-800" },
-    { name: "السيارات", icon: "🚗", color: "bg-gray-100 text-gray-800" },
+    { name: "الإلكترونيات", icon: "📱", color: "bg-blue-50 hover:bg-blue-100 border-blue-200" },
+    { name: "الأزياء", icon: "👕", color: "bg-purple-50 hover:bg-purple-100 border-purple-200" },
+    { name: "المنزل والحديقة", icon: "🏠", color: "bg-green-50 hover:bg-green-100 border-green-200" },
+    { name: "الصحة والجمال", icon: "💄", color: "bg-pink-50 hover:bg-pink-100 border-pink-200" },
+    { name: "الرياضة", icon: "⚽", color: "bg-orange-50 hover:bg-orange-100 border-orange-200" },
+    { name: "الكتب", icon: "📚", color: "bg-indigo-50 hover:bg-indigo-100 border-indigo-200" },
+    { name: "الألعاب", icon: "🎮", color: "bg-red-50 hover:bg-red-100 border-red-200" },
+    { name: "السيارات", icon: "🚗", color: "bg-gray-50 hover:bg-gray-100 border-gray-200" },
   ];
 
   if (storesLoading || productsLoading || servicesLoading || jobsLoading || announcementsLoading) {
@@ -399,19 +399,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {categories.map((category, index) => (
               <Link
                 key={index}
                 href={`/marketplace?category=${encodeURIComponent(category.name)}`}
                 className="group"
               >
-                <Card className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
-                  <CardContent className="p-3 md:p-6 text-center">
-                    <div className="text-2xl md:text-4xl mb-1 md:mb-3 group-hover:scale-110 transition-transform">
+                <Card className={`hover:shadow-lg transition-all duration-300 border ${category.color} shadow-sm`}>
+                  <CardContent className="p-4 md:p-6 text-center">
+                    <div className="text-3xl md:text-4xl mb-2 md:mb-3 group-hover:scale-110 transition-transform">
                       {category.icon}
                     </div>
-                    <h3 className="text-xs md:text-sm font-semibold text-gray-900 group-hover:text-sudan-blue transition-colors">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-sudan-blue transition-colors">
                       {category.name}
                     </h3>
                   </CardContent>
