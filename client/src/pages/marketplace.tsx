@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import sudaneseMarketImage from "@assets/sudanese-market.jpg";
 import { Input } from "@/components/ui/input";
@@ -32,6 +32,18 @@ export default function Marketplace() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("newest");
   const [activeTab, setActiveTab] = useState<"products" | "stores">("products");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { data: stores, isLoading: storesLoading } = useQuery({
     queryKey: ['/api/stores'],
@@ -193,17 +205,21 @@ export default function Marketplace() {
               <div className="flex items-center space-x-2 space-x-reverse">
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="icon"
+                  size={isMobile ? "sm" : "icon"}
                   onClick={() => setViewMode("grid")}
+                  className={isMobile ? "px-3" : ""}
                 >
                   <Grid className="w-4 h-4" />
+                  {isMobile && <span className="mr-2">شبكة</span>}
                 </Button>
                 <Button
                   variant={viewMode === "list" ? "default" : "ghost"}
-                  size="icon"
+                  size={isMobile ? "sm" : "icon"}
                   onClick={() => setViewMode("list")}
+                  className={isMobile ? "px-3" : ""}
                 >
                   <List className="w-4 h-4" />
+                  {isMobile && <span className="mr-2">قائمة</span>}
                 </Button>
               </div>
             </div>
@@ -246,7 +262,7 @@ export default function Marketplace() {
           {activeTab === "products" && (
             <div>
               {filteredProducts && filteredProducts.length > 0 ? (
-                <div className={`grid gap-6 ${
+                <div className={`grid gap-3 md:gap-6 ${
                   viewMode === "grid" 
                     ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
                     : "grid-cols-1"
@@ -255,6 +271,8 @@ export default function Marketplace() {
                     <ProductCard 
                       key={product.id} 
                       product={product} 
+                      viewMode={viewMode}
+                      compact={isMobile}
                       className={viewMode === "list" ? "md:flex md:items-center" : ""}
                     />
                   ))}
