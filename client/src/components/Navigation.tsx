@@ -20,6 +20,7 @@ import {
   X,
   Home,
   Store,
+  ChefHat,
   Briefcase,
   Bell,
   Settings,
@@ -39,6 +40,8 @@ export default function Navigation() {
   const navItems = [
     { href: '/', label: 'الرئيسية', icon: Home },
     { href: '/marketplace', label: 'السوق', icon: Store },
+    { href: '/stores', label: 'المتاجر', icon: Store },
+    { href: '/restaurants', label: 'المطاعم', icon: ChefHat },
     { href: '/services', label: 'الخدمات', icon: Briefcase },
     { href: '/jobs', label: 'الوظائف', icon: Briefcase },
     { href: '/announcements', label: 'الإعلانات', icon: Bell },

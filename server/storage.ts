@@ -73,7 +73,7 @@ export class MemStorage implements IStorage {
   private services: Service[] = [];
   private jobs: Job[] = [];
   private announcements: Announcement[] = [];
-  private nextId = 1;
+  private nextId = 10;
 
   constructor() {
     // Initialize with some demo data
@@ -133,7 +133,20 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.stores = [demoStore];
+    // Create demo restaurant
+    const demoRestaurant: Store = {
+      id: 2,
+      name: 'مطعم الأصالة السودانية',
+      description: 'مطعم يقدم أشهى الأطباق السودانية التقليدية مثل الملاح والمولاح والكسرة',
+      ownerId: "2",
+      category: 'restaurants-cafes',
+      address: 'الخرطوم - شارع النيل',
+      phone: '0183456790',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.stores = [demoStore, demoRestaurant];
 
     // Create demo products
     const demoProduct: Product = {
@@ -147,7 +160,19 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.products = [demoProduct];
+    // Create demo restaurant product (meal)
+    const demoMeal: Product = {
+      id: 2,
+      name: 'ملاح أصيل سوداني',
+      description: 'ملاح طازج مطبوخ بالطريقة التقليدية مع اللحمة والخضار',
+      price: '35',
+      storeId: 2,
+      category: 'مطاعم وكافيهات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.products = [demoProduct, demoMeal];
 
     // Create demo services
     const demoService: Service = {

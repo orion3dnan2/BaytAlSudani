@@ -10,6 +10,8 @@ import NotFound from "@/pages/not-found";
 import Landing from "@/pages/auth/landing";
 import Home from "@/pages/home";
 import Marketplace from "@/pages/marketplace";
+import Stores from "@/pages/stores";
+import Restaurants from "@/pages/restaurants";
 import Services from "@/pages/services";
 import Jobs from "@/pages/jobs";
 import Announcements from "@/pages/announcements";
@@ -48,6 +50,8 @@ function Router() {
     <Switch>
       {/* Main routes - always available */}
       <Route path="/marketplace" component={Marketplace} />
+      <Route path="/stores" component={Stores} />
+      <Route path="/restaurants" component={Restaurants} />
       <Route path="/services" component={Services} />
       <Route path="/jobs" component={Jobs} />
       <Route path="/announcements" component={Announcements} />
