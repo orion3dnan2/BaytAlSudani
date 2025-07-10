@@ -64,7 +64,6 @@ export default function Navigation() {
           </div>
         </div>
       </div>
-
       {/* Main Navigation */}
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -75,7 +74,7 @@ export default function Navigation() {
             </div>
             <div className="hidden md:block">
               <h1 className="text-xl font-bold text-sudan-blue">البيت السوداني</h1>
-              <p className="text-xs text-gray-600">منصة التجارة الإلكترونية</p>
+              <p className="text-xs text-gray-600">سوداني وخليك ...... قدرها</p>
             </div>
           </Link>
 
@@ -209,7 +208,6 @@ export default function Navigation() {
           })}
         </div>
       </div>
-
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
