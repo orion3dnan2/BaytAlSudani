@@ -2,13 +2,10 @@ import { users, stores, products, services, jobs, announcements, type User, type
 import { eq } from "drizzle-orm";
 
 // Database imports for DatabaseStorage class
-let db: any;
-try {
-  db = require("./db-sqlite").db;
-  console.log("Using SQLite database");
-} catch (error) {
-  console.log("Database not available, using in-memory storage");
-}
+import bcrypt from "bcryptjs";
+
+// Import database connection for PostgreSQL
+import { db } from "./db";
 
 export interface IStorage {
   // Users
@@ -705,4 +702,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = db ? new DatabaseStorage() : new MemStorage();
+// Initialize storage based on database availability
+export const storage = (db && process.env.DATABASE_URL) ? new DatabaseStorage() : new MemStorage();
