@@ -64,10 +64,15 @@ shared/
 
 ### Database Schema
 
-Currently implements a basic user system:
-- **Users Table**: id, username, password
+Complete marketplace database schema with the following tables:
+- **Users Table**: id, username, password, email, fullName, phone, role, isActive, createdAt
+- **Stores Table**: id, name, description, ownerId, category, address, phone, isActive, createdAt
+- **Products Table**: id, name, description, price, storeId, category, isActive, createdAt
+- **Services Table**: id, name, description, price, storeId, category, isActive, createdAt
+- **Jobs Table**: id, title, description, salary, location, storeId, isActive, createdAt
+- **Announcements Table**: id, title, content, storeId, isActive, createdAt
 - **Schema Validation**: Zod integration for type-safe validation
-- **ORM**: Drizzle ORM with PostgreSQL dialect
+- **ORM**: Drizzle ORM with PostgreSQL dialect and full relations support
 
 ### External Dependencies
 
