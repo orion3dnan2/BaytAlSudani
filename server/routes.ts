@@ -5,10 +5,14 @@ import { storage } from "./storage";
 import { authenticateToken, requireAdmin, requireStoreOwner, type AuthenticatedRequest } from "./middleware/auth";
 import { insertStoreSchema, insertProductSchema, insertServiceSchema, insertJobSchema, insertAnnouncementSchema } from "@shared/schema";
 import { setupAuth } from "./replitAuth";
+import apiRoutes from "./routes/api";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
+
+  // Mobile API routes
+  app.use('/api', apiRoutes);
 
   // Auth routes handled by /api/auth routes in index.ts
 
