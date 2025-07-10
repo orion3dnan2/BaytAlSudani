@@ -23,6 +23,8 @@ import MerchantDashboard from "@/pages/merchant/dashboard";
 import Profile from "@/pages/profile";
 import CreateProduct from "@/pages/products/create";
 import CreateStore from "@/pages/stores/create";
+import HandleLink from "@/pages/handle-link";
+import ImportData from "@/pages/import-data";
 
 function App() {
   return (
@@ -78,6 +80,11 @@ function Router() {
       {/* Legacy auth routes for existing system */}
       <Route path="/auth/login" component={Login} />
       <Route path="/auth/register" component={Register} />
+      
+      {/* PWA specific routes */}
+      <Route path="/handle-link" component={HandleLink} />
+      <Route path="/import-data" component={ImportData} />
+      
       <Route component={NotFound} />
     </Switch>
   );
