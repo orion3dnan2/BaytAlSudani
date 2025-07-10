@@ -119,7 +119,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
       {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -151,9 +150,8 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-sudan-blue to-sudan-red text-white">
+      <section className="py-16 from-sudan-blue to-sudan-red text-white bg-[#4a3704d9]">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             ابدأ رحلتك معنا اليوم
