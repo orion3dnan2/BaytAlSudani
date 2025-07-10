@@ -50,7 +50,7 @@ export default function ProductCard({ product, showStore = true, className = '' 
   };
 
   const getRandomImage = () => {
-    const categories = ['electronics', 'fashion', 'home', 'food', 'books', 'sports'];
+    const categories = ['electronics', 'fashion', 'home', 'restaurants-cafes', 'books', 'sports'];
     const randomCategory = categories[Math.floor(Math.random() * categories.length)];
     return `https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&q=80`;
   };

@@ -41,7 +41,7 @@ const CreateStoreScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [categoryMenuVisible, setCategoryMenuVisible] = useState(false);
 
   const categories = [
-    'الأغذية والمشروبات',
+    'مطاعم وكافيهات',
     'الملابس والأزياء',
     'الإلكترونيات',
     'المنزل والحديقة',

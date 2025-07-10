@@ -45,6 +45,7 @@ export default function Marketplace() {
     { value: "all", label: "جميع الفئات" },
     { value: "إلكترونيات", label: "الإلكترونيات" },
     { value: "أزياء", label: "الأزياء" },
+    { value: "مطاعم وكافيهات", label: "مطاعم وكافيهات" },
     { value: "منزل", label: "المنزل والحديقة" },
     { value: "صحة", label: "الصحة والجمال" },
     { value: "رياضة", label: "الرياضة" },

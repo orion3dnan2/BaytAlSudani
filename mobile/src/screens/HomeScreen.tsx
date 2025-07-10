@@ -47,7 +47,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
   const categories = [
-    { name: 'الأغذية', icon: 'food', color: sudaneseColors.gold },
+    { name: 'مطاعم وكافيهات', icon: 'food', color: sudaneseColors.gold },
     { name: 'الملابس', icon: 'tshirt-crew', color: sudaneseColors.red },
     { name: 'الإلكترونيات', icon: 'cellphone', color: sudaneseColors.blue },
     { name: 'المنزل', icon: 'home', color: sudaneseColors.darkGreen },

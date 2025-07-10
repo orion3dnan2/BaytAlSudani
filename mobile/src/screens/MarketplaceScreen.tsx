@@ -51,7 +51,7 @@ const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const categories = [
     'الكل',
-    'الأغذية',
+    'مطاعم وكافيهات',
     'الملابس',
     'الإلكترونيات',
     'المنزل والحديقة',

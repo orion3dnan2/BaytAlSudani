@@ -28,7 +28,7 @@ type StoreForm = z.infer<typeof storeSchema>;
 const storeCategories = [
   'electronics',
   'fashion',
-  'food',
+  'restaurants-cafes',
   'home-garden',
   'health-beauty',
   'sports',
@@ -47,7 +47,7 @@ const storeCategories = [
 const categoryLabels = {
   electronics: 'الإلكترونيات',
   fashion: 'الأزياء والملابس',
-  food: 'المواد الغذائية',
+  'restaurants-cafes': 'مطاعم وكافيهات',
   'home-garden': 'المنزل والحديقة',
   'health-beauty': 'الصحة والجمال',
   sports: 'الرياضة واللياقة',

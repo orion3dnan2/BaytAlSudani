@@ -204,7 +204,7 @@ export default function Home() {
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {["هاتف", "لابتوب", "ملابس", "طعام", "كتب"].map((tag) => (
+                    {["هاتف", "لابتوب", "ملابس", "مطاعم", "كتب"].map((tag) => (
                       <Badge key={tag} variant="secondary" className="bg-white/25 text-white hover:bg-white/35 border-white/20">
                         {tag}
                       </Badge>

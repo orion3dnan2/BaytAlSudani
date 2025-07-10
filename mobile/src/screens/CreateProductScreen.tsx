@@ -51,7 +51,7 @@ const CreateProductScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [stores, setStores] = useState<Store[]>([]);
 
   const categories = [
-    'الأغذية والمشروبات',
+    'مطاعم وكافيهات',
     'الملابس والأزياء',
     'الإلكترونيات',
     'المنزل والحديقة',
