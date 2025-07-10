@@ -25,7 +25,6 @@ export default function Footer() {
       >
         <ArrowUp className="w-5 h-5" />
       </Button>
-
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -116,7 +115,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 space-x-reverse">
                 <MapPin className="w-5 h-5 text-sudan-blue" />
-                <span className="text-gray-400 text-sm">الخرطوم، السودان</span>
+                <span className="text-gray-400 text-sm">الكويت  , حولي</span>
               </div>
               <div className="flex items-center space-x-3 space-x-reverse">
                 <Phone className="w-5 h-5 text-sudan-blue" />
@@ -150,7 +149,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
       {/* Bottom Bar */}
       <div className="border-t border-gray-800 bg-gray-950">
         <div className="container mx-auto px-4 py-6">
