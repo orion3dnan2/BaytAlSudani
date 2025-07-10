@@ -97,7 +97,7 @@ export default function Marketplace() {
       <section className="bg-gradient-sudan-heritage text-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">السوق الإلكتروني</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4">السوق السوداني </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">اكتشف أفضل المتاجر والمنتجات السودانية</p>
           </div>
 
