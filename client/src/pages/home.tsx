@@ -5,8 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import ProductCard from "@/components/ProductCard";
 import StoreCard from "@/components/StoreCard";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   Store, 
   ShoppingBag, 
@@ -23,10 +25,14 @@ import {
   Zap,
   TrendingUp,
   Award,
-  Clock
+  Clock,
+  Plus,
+  AlertCircle
 } from "lucide-react";
 
 export default function Home() {
+  const { user, isAuthenticated } = useAuth();
+  
   const { data: stores, isLoading: storesLoading } = useQuery({
     queryKey: ['/api/stores'],
   });
@@ -46,6 +52,11 @@ export default function Home() {
   const { data: announcements, isLoading: announcementsLoading } = useQuery({
     queryKey: ['/api/announcements'],
   });
+
+  // Check if user is a store owner and has no stores
+  const isStoreOwner = user?.role === 'store_owner';
+  const userStores = stores?.filter(store => store.ownerId === user?.id?.toString());
+  const needsToCreateStore = isStoreOwner && (!userStores || userStores.length === 0);
 
   const features = [
     {
@@ -206,15 +217,95 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Merchant Onboarding Alert */}
+      {needsToCreateStore && (
+        <section className="py-6 bg-gradient-to-r from-sudan-gold/20 to-sudan-gold/10 border-b border-sudan-gold/30">
+          <div className="container mx-auto px-4">
+            <Alert className="bg-white/80 backdrop-blur-sm border-sudan-gold/40">
+              <AlertCircle className="h-5 w-5 text-sudan-gold" />
+              <AlertDescription className="text-right">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      مرحباً بك في البيت السوداني! 👋
+                    </h3>
+                    <p className="text-gray-700">
+                      لبدء البيع والوصول إلى آلاف العملاء، يجب أن تكون لديك متجر. انشئ متجرك الآن وابدأ رحلتك التجارية!
+                    </p>
+                  </div>
+                  <Button 
+                    className="bg-sudan-gold hover:bg-sudan-gold/90 text-gray-900 font-semibold"
+                    asChild
+                  >
+                    <Link href="/stores/create">
+                      <Plus className="w-4 h-4 mr-2" />
+                      إنشاء متجر جديد
+                    </Link>
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
+          </div>
+        </section>
+      )}
+
       {/* Quick Access Section */}
       <section className="py-12 bg-white border-b">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">الدخول السريع</h2>
-            <p className="text-gray-600">اختر ما تحتاجه من الخدمات المتاحة</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              {isStoreOwner ? 'أدوات التاجر' : 'الدخول السريع'}
+            </h2>
+            <p className="text-gray-600">
+              {isStoreOwner ? 'إدارة متجرك ومنتجاتك' : 'اختر ما تحتاجه من الخدمات المتاحة'}
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {isStoreOwner && (
+              <Link href="/stores/create" className="group">
+                <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-gold bg-gradient-to-br from-sudan-gold/5 to-sudan-gold/10">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-sudan-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-gold/20 transition-colors">
+                      <Plus className="w-8 h-8 text-sudan-gold" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-gold">
+                      إنشاء متجر
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      أنشئ متجرك الجديد
+                    </p>
+                    <div className="text-sm font-medium text-sudan-gold mt-2">
+                      ابدأ الآن
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
+            
+            {isStoreOwner && (
+              <Link href="/merchant/dashboard" className="group">
+                <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue bg-gradient-to-br from-sudan-blue/5 to-sudan-blue/10">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-sudan-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-blue/20 transition-colors">
+                      <Store className="w-8 h-8 text-sudan-blue" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-blue">
+                      لوحة التحكم
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      إدارة متاجرك ومنتجاتك
+                    </p>
+                    <div className="text-2xl font-bold text-sudan-blue mt-2">
+                      {userStores?.length || 0}
+                    </div>
+                    <div className="text-sm text-gray-500">متجر</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
+            
+            {/* Show marketplace options for everyone */}
             <Link href="/marketplace" className="group">
               <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue">
                 <CardContent className="p-6 text-center">
