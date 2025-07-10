@@ -1,6 +1,14 @@
 import { users, stores, products, services, jobs, announcements, type User, type InsertUser, type Store, type InsertStore, type Product, type InsertProduct, type Service, type InsertService, type Job, type InsertJob, type Announcement, type InsertAnnouncement } from "@shared/schema";
-import { db } from "./db";
 import { eq } from "drizzle-orm";
+
+// Database imports for DatabaseStorage class
+let db: any;
+try {
+  db = require("./db").db;
+} catch (error) {
+  // Database not available, using in-memory storage
+  console.log("Database not available, using in-memory storage");
+}
 
 export interface IStorage {
   // Users
@@ -54,6 +62,272 @@ export interface IStorage {
   createAnnouncement(announcement: InsertAnnouncement): Promise<Announcement>;
   updateAnnouncement(id: number, announcement: Partial<InsertAnnouncement>): Promise<Announcement | undefined>;
   deleteAnnouncement(id: number): Promise<boolean>;
+}
+
+export class MemStorage implements IStorage {
+  private users: User[] = [];
+  private stores: Store[] = [];
+  private products: Product[] = [];
+  private services: Service[] = [];
+  private jobs: Job[] = [];
+  private announcements: Announcement[] = [];
+  private nextId = 1;
+
+  // Users
+  async getUser(id: number): Promise<User | undefined> {
+    return this.users.find(u => u.id === id);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return this.users.find(u => u.username === username);
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return this.users.find(u => u.email === email);
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const user: User = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertUser
+    };
+    this.users.push(user);
+    return user;
+  }
+
+  async updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined> {
+    const index = this.users.findIndex(u => u.id === id);
+    if (index === -1) return undefined;
+    
+    this.users[index] = { ...this.users[index], ...userData };
+    return this.users[index];
+  }
+
+  async deleteUser(id: number): Promise<boolean> {
+    const index = this.users.findIndex(u => u.id === id);
+    if (index === -1) return false;
+    
+    this.users.splice(index, 1);
+    return true;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return [...this.users];
+  }
+
+  // Stores
+  async getStore(id: number): Promise<Store | undefined> {
+    return this.stores.find(s => s.id === id);
+  }
+
+  async getStoresByOwner(ownerId: number): Promise<Store[]> {
+    return this.stores.filter(s => s.ownerId === ownerId);
+  }
+
+  async getStoresByCategory(category: string): Promise<Store[]> {
+    return this.stores.filter(s => s.category === category);
+  }
+
+  async getAllStores(): Promise<Store[]> {
+    return [...this.stores];
+  }
+
+  async createStore(insertStore: InsertStore): Promise<Store> {
+    const store: Store = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertStore
+    };
+    this.stores.push(store);
+    return store;
+  }
+
+  async updateStore(id: number, storeData: Partial<InsertStore>): Promise<Store | undefined> {
+    const index = this.stores.findIndex(s => s.id === id);
+    if (index === -1) return undefined;
+    
+    this.stores[index] = { ...this.stores[index], ...storeData };
+    return this.stores[index];
+  }
+
+  async deleteStore(id: number): Promise<boolean> {
+    const index = this.stores.findIndex(s => s.id === id);
+    if (index === -1) return false;
+    
+    this.stores.splice(index, 1);
+    return true;
+  }
+
+  // Products
+  async getProduct(id: number): Promise<Product | undefined> {
+    return this.products.find(p => p.id === id);
+  }
+
+  async getProductsByStore(storeId: number): Promise<Product[]> {
+    return this.products.filter(p => p.storeId === storeId);
+  }
+
+  async getProductsByCategory(category: string): Promise<Product[]> {
+    return this.products.filter(p => p.category === category);
+  }
+
+  async getAllProducts(): Promise<Product[]> {
+    return [...this.products];
+  }
+
+  async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    const product: Product = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertProduct
+    };
+    this.products.push(product);
+    return product;
+  }
+
+  async updateProduct(id: number, productData: Partial<InsertProduct>): Promise<Product | undefined> {
+    const index = this.products.findIndex(p => p.id === id);
+    if (index === -1) return undefined;
+    
+    this.products[index] = { ...this.products[index], ...productData };
+    return this.products[index];
+  }
+
+  async deleteProduct(id: number): Promise<boolean> {
+    const index = this.products.findIndex(p => p.id === id);
+    if (index === -1) return false;
+    
+    this.products.splice(index, 1);
+    return true;
+  }
+
+  // Services
+  async getService(id: number): Promise<Service | undefined> {
+    return this.services.find(s => s.id === id);
+  }
+
+  async getServicesByStore(storeId: number): Promise<Service[]> {
+    return this.services.filter(s => s.storeId === storeId);
+  }
+
+  async getServicesByCategory(category: string): Promise<Service[]> {
+    return this.services.filter(s => s.category === category);
+  }
+
+  async getAllServices(): Promise<Service[]> {
+    return [...this.services];
+  }
+
+  async createService(insertService: InsertService): Promise<Service> {
+    const service: Service = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertService
+    };
+    this.services.push(service);
+    return service;
+  }
+
+  async updateService(id: number, serviceData: Partial<InsertService>): Promise<Service | undefined> {
+    const index = this.services.findIndex(s => s.id === id);
+    if (index === -1) return undefined;
+    
+    this.services[index] = { ...this.services[index], ...serviceData };
+    return this.services[index];
+  }
+
+  async deleteService(id: number): Promise<boolean> {
+    const index = this.services.findIndex(s => s.id === id);
+    if (index === -1) return false;
+    
+    this.services.splice(index, 1);
+    return true;
+  }
+
+  // Jobs
+  async getJob(id: number): Promise<Job | undefined> {
+    return this.jobs.find(j => j.id === id);
+  }
+
+  async getJobsByStore(storeId: number): Promise<Job[]> {
+    return this.jobs.filter(j => j.storeId === storeId);
+  }
+
+  async getAllJobs(): Promise<Job[]> {
+    return [...this.jobs];
+  }
+
+  async createJob(insertJob: InsertJob): Promise<Job> {
+    const job: Job = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertJob
+    };
+    this.jobs.push(job);
+    return job;
+  }
+
+  async updateJob(id: number, jobData: Partial<InsertJob>): Promise<Job | undefined> {
+    const index = this.jobs.findIndex(j => j.id === id);
+    if (index === -1) return undefined;
+    
+    this.jobs[index] = { ...this.jobs[index], ...jobData };
+    return this.jobs[index];
+  }
+
+  async deleteJob(id: number): Promise<boolean> {
+    const index = this.jobs.findIndex(j => j.id === id);
+    if (index === -1) return false;
+    
+    this.jobs.splice(index, 1);
+    return true;
+  }
+
+  // Announcements
+  async getAnnouncement(id: number): Promise<Announcement | undefined> {
+    return this.announcements.find(a => a.id === id);
+  }
+
+  async getAnnouncementsByStore(storeId: number): Promise<Announcement[]> {
+    return this.announcements.filter(a => a.storeId === storeId);
+  }
+
+  async getAllAnnouncements(): Promise<Announcement[]> {
+    return [...this.announcements];
+  }
+
+  async createAnnouncement(insertAnnouncement: InsertAnnouncement): Promise<Announcement> {
+    const announcement: Announcement = {
+      id: this.nextId++,
+      createdAt: new Date(),
+      isActive: true,
+      ...insertAnnouncement
+    };
+    this.announcements.push(announcement);
+    return announcement;
+  }
+
+  async updateAnnouncement(id: number, announcementData: Partial<InsertAnnouncement>): Promise<Announcement | undefined> {
+    const index = this.announcements.findIndex(a => a.id === id);
+    if (index === -1) return undefined;
+    
+    this.announcements[index] = { ...this.announcements[index], ...announcementData };
+    return this.announcements[index];
+  }
+
+  async deleteAnnouncement(id: number): Promise<boolean> {
+    const index = this.announcements.findIndex(a => a.id === id);
+    if (index === -1) return false;
+    
+    this.announcements.splice(index, 1);
+    return true;
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -292,4 +566,4 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();
