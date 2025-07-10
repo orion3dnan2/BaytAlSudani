@@ -205,6 +205,99 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Quick Access Section */}
+      <section className="py-12 bg-white border-b">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">الدخول السريع</h2>
+            <p className="text-gray-600">اختر ما تحتاجه من الخدمات المتاحة</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            <Link href="/marketplace" className="group">
+              <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-sudan-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-blue/20 transition-colors">
+                    <ShoppingBag className="w-8 h-8 text-sudan-blue" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-blue">
+                    السوق
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    تسوق من أفضل المنتجات
+                  </p>
+                  <div className="text-2xl font-bold text-sudan-blue mt-2">
+                    +{products?.length || 0}
+                  </div>
+                  <div className="text-sm text-gray-500">منتج متاح</div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/services" className="group">
+              <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-sudan-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-blue/20 transition-colors">
+                    <Briefcase className="w-8 h-8 text-sudan-blue" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-blue">
+                    الخدمات
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    اطلب الخدمات المهنية
+                  </p>
+                  <div className="text-2xl font-bold text-sudan-blue mt-2">
+                    +{services?.length || 0}
+                  </div>
+                  <div className="text-sm text-gray-500">خدمة مهنية</div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/jobs" className="group">
+              <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-sudan-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-blue/20 transition-colors">
+                    <Users className="w-8 h-8 text-sudan-blue" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-blue">
+                    الوظائف
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    ابحث عن فرص العمل
+                  </p>
+                  <div className="text-2xl font-bold text-sudan-blue mt-2">
+                    +{jobs?.length || 0}
+                  </div>
+                  <div className="text-sm text-gray-500">وظيفة متاحة</div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/announcements" className="group">
+              <Card className="hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-sudan-blue">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-sudan-blue/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-sudan-blue/20 transition-colors">
+                    <Bell className="w-8 h-8 text-sudan-blue" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-sudan-blue">
+                    الإعلانات
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    آخر الأخبار والعروض
+                  </p>
+                  <div className="text-2xl font-bold text-sudan-blue mt-2">
+                    +{announcements?.length || 0}
+                  </div>
+                  <div className="text-sm text-gray-500">إعلان يومي</div>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Categories Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
