@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(159, 88%, 20%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(178, 88%, 24%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(38, 95%, 48%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Arabic marketplace colors */
+  --primary-50: hsl(154, 100%, 97%);
+  --primary-100: hsl(154, 85%, 92%);
+  --primary-500: hsl(159, 88%, 20%);
+  --primary-600: hsl(161, 89%, 17%);
+  --primary-700: hsl(163, 91%, 15%);
+  --primary-800: hsl(165, 92%, 12%);
+  --primary-900: hsl(167, 94%, 8%);
+  
+  --secondary-50: hsl(180, 100%, 97%);
+  --secondary-100: hsl(180, 85%, 92%);
+  --secondary-500: hsl(178, 88%, 24%);
+  --secondary-600: hsl(178, 88%, 20%);
+  --secondary-700: hsl(178, 88%, 16%);
+  --secondary-800: hsl(178, 88%, 12%);
+  --secondary-900: hsl(178, 88%, 8%);
+  
+  --accent-50: hsl(48, 100%, 97%);
+  --accent-100: hsl(48, 93%, 88%);
+  --accent-500: hsl(38, 95%, 48%);
+  --accent-600: hsl(32, 95%, 44%);
+  --accent-700: hsl(26, 95%, 40%);
+  --accent-800: hsl(22, 95%, 36%);
+  --accent-900: hsl(16, 95%, 32%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(159, 88%, 20%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-arabic antialiased bg-background text-foreground;
+    font-family: 'Noto Sans Arabic', Arial, sans-serif;
+  }
+  
+  html {
+    direction: rtl;
+  }
+}
+
+@layer utilities {
+  .font-arabic {
+    font-family: 'Noto Sans Arabic', Arial, sans-serif;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-bounce-gentle {
+    animation: bounceGentle 2s infinite;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes bounceGentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+}

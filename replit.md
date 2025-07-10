@@ -1,0 +1,130 @@
+# البيت السوداني - Sudanese Marketplace Platform
+
+## Overview
+
+This is a modern Arabic marketplace platform built with React and Express.js, designed to connect Sudanese merchants and service providers with customers. The application features a clean, RTL-optimized interface with sections for marketplace, services, jobs, and announcements.
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+## System Architecture
+
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite for fast development and optimized builds
+- **UI Framework**: Shadcn/ui components with Radix UI primitives
+- **Styling**: Tailwind CSS with custom Arabic/RTL styling
+- **State Management**: TanStack Query for server state management
+- **Routing**: Wouter for lightweight client-side routing
+- **Language**: Arabic (RTL) with Google Fonts (Noto Sans Arabic)
+
+### Backend Architecture
+- **Runtime**: Node.js with Express.js
+- **Language**: TypeScript with ES modules
+- **Database**: PostgreSQL with Drizzle ORM
+- **Database Provider**: Neon serverless PostgreSQL
+- **Session Management**: PostgreSQL-backed sessions with connect-pg-simple
+- **Development**: Hot reloading with Vite middleware integration
+
+### Key Components
+
+#### Frontend Structure
+```
+client/
+├── src/
+│   ├── components/ui/     # Reusable UI components (30+ Shadcn components)
+│   ├── pages/            # Route-based page components
+│   ├── hooks/            # Custom React hooks
+│   ├── lib/              # Utility functions and query client
+│   └── main.tsx          # Application entry point
+```
+
+#### Backend Structure
+```
+server/
+├── index.ts              # Express server setup
+├── routes.ts             # API route definitions
+├── storage.ts            # Database abstraction layer
+└── vite.ts              # Development server integration
+```
+
+#### Shared Resources
+```
+shared/
+└── schema.ts             # Database schema and validation
+```
+
+### Data Flow
+
+1. **Client Requests**: Frontend makes API calls using TanStack Query
+2. **Server Processing**: Express server handles requests through registered routes
+3. **Database Operations**: Storage layer abstracts database interactions using Drizzle ORM
+4. **Response Handling**: Structured JSON responses with error handling middleware
+
+### Database Schema
+
+Currently implements a basic user system:
+- **Users Table**: id, username, password
+- **Schema Validation**: Zod integration for type-safe validation
+- **ORM**: Drizzle ORM with PostgreSQL dialect
+
+### External Dependencies
+
+#### UI & Styling
+- **Radix UI**: Accessible component primitives
+- **Tailwind CSS**: Utility-first CSS framework
+- **Lucide React**: Icon library
+- **Google Fonts**: Arabic typography support
+
+#### Data & State
+- **TanStack Query**: Server state management
+- **Drizzle ORM**: Type-safe database queries
+- **Zod**: Schema validation
+- **React Hook Form**: Form management
+
+#### Development Tools
+- **Vite**: Fast build tool and dev server
+- **ESBuild**: Production bundling
+- **TypeScript**: Type safety across the stack
+
+### Deployment Strategy
+
+#### Build Process
+1. **Frontend Build**: Vite builds React app to `dist/public`
+2. **Backend Build**: ESBuild bundles server code to `dist/index.js`
+3. **Database**: Drizzle Kit handles schema migrations
+
+#### Environment Setup
+- **Development**: `npm run dev` - runs TypeScript server with hot reload
+- **Production**: `npm run build && npm start` - builds and runs optimized bundle
+- **Database**: `npm run db:push` - applies schema changes
+
+#### Key Configuration
+- **Database URL**: Required environment variable for PostgreSQL connection
+- **Session Management**: PostgreSQL-backed sessions for scalability
+- **Static Assets**: Express serves built React app in production
+
+### Architecture Decisions
+
+#### Database Choice
+- **PostgreSQL**: Chosen for reliability and scalability
+- **Neon Serverless**: Provides managed PostgreSQL with excellent developer experience
+- **Drizzle ORM**: Type-safe alternative to traditional ORMs with better performance
+
+#### UI Framework Selection
+- **Shadcn/ui**: Provides high-quality, customizable components
+- **Radix UI**: Ensures accessibility compliance
+- **Tailwind CSS**: Enables rapid UI development with consistent design
+
+#### RTL Support
+- **Arabic First**: HTML lang and dir attributes set for Arabic
+- **Custom Styling**: Tailwind configured for RTL layout support
+- **Typography**: Google Fonts integration for proper Arabic rendering
+
+#### State Management
+- **TanStack Query**: Handles server state, caching, and synchronization
+- **Local State**: React hooks for component-level state management
+- **Form State**: React Hook Form for efficient form handling
+
+This architecture provides a solid foundation for a marketplace platform with room for growth in features like authentication, product management, and payment processing.
