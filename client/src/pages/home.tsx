@@ -17,10 +17,16 @@ import {
   Globe,
   Palmtree,
   Mountain,
-  Waves
+  Waves,
+  LogOut,
+  User
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function Home() {
+  const { user, logout, isAuthenticated } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-orange-50">
       {/* Header */}
@@ -48,10 +54,30 @@ export default function Home() {
                 EN
               </Button>
               
-              <Button className="bg-sudan-blue hover:bg-sudan-blue/90 text-white shadow-sm hover:shadow-md">
-                <span className="hidden sm:inline">تسجيل الدخول</span>
-                <span className="sm:hidden">دخول</span>
-              </Button>
+              {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className="bg-sudan-blue hover:bg-sudan-blue/90 text-white shadow-sm hover:shadow-md">
+                      <User className="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                      <span className="hidden sm:inline">{user?.fullName}</span>
+                      <span className="sm:hidden">الملف</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                      تسجيل الخروج
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link href="/auth/login">
+                  <Button className="bg-sudan-blue hover:bg-sudan-blue/90 text-white shadow-sm hover:shadow-md">
+                    <span className="hidden sm:inline">تسجيل الدخول</span>
+                    <span className="sm:hidden">دخول</span>
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
