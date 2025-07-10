@@ -102,25 +102,43 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-sudan-heritage text-white">
-        <div className="absolute inset-0 pattern-sudanese-geometric opacity-10"></div>
+        {/* Background Image - Right Side */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#871414] from-0% via-[#871414]/90 via-45% to-transparent to-70%"></div>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
+            style={{
+              backgroundImage: "url('/IMG_20140225_115710_1752141643086.jpg')",
+              backgroundPosition: "center right",
+              maskImage: "linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,1) 100%)",
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,1) 100%)"
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#871414]/60 via-transparent to-black/40"></div>
+        </div>
+        
+        {/* Geometric Pattern Overlay */}
+        <div className="absolute inset-0 pattern-sudanese-geometric opacity-5"></div>
+        
+        {/* Content */}
         <div className="relative container mx-auto px-4 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 relative z-10">
               <div className="space-y-4">
                 <Badge className="bg-sudan-gold text-gray-900 text-sm px-3 py-1">
                   🇸🇩 منصة سودانية 100%
                 </Badge>
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white drop-shadow-lg">
                   البيت السوداني
                 </h1>
-                <p className="text-xl lg:text-2xl text-white/90">سوداني وخليك .............. قدرها</p>
-                <p className="text-lg text-white/80 max-w-lg">تسوق واكتشف أفضل المنتجات والخدمات من التجار السودانيين. تجربة تسوق آمنة وسهلة مع توصيل سريع .</p>
+                <p className="text-xl lg:text-2xl text-white drop-shadow-md">سوداني وخليك .............. قدرها</p>
+                <p className="text-lg text-white/90 max-w-lg drop-shadow-sm">تسوق واكتشف أفضل المنتجات والخدمات من التجار السودانيين. تجربة تسوق آمنة وسهلة مع توصيل سريع .</p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-sudan-gold hover:bg-sudan-gold/90 text-gray-900 text-lg px-8 py-6"
+                  className="bg-sudan-gold hover:bg-sudan-gold/90 text-gray-900 text-lg px-8 py-6 shadow-lg"
                   asChild
                 >
                   <Link href="/marketplace">
@@ -131,7 +149,7 @@ export default function Home() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6 bg-[#871414]"
+                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6 bg-[#871414]/70 backdrop-blur-sm shadow-lg"
                   asChild
                 >
                   <Link href="/register">
@@ -143,31 +161,31 @@ export default function Home() {
 
               <div className="flex items-center space-x-8 space-x-reverse">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{stores?.length || 0}+</div>
-                  <div className="text-sm text-white/80">متجر</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">{stores?.length || 0}+</div>
+                  <div className="text-sm text-white/90">متجر</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{products?.length || 0}+</div>
-                  <div className="text-sm text-white/80">منتج</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">{products?.length || 0}+</div>
+                  <div className="text-sm text-white/90">منتج</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">1000+</div>
-                  <div className="text-sm text-white/80">عميل</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">1000+</div>
+                  <div className="text-sm text-white/90">عميل</div>
                 </div>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+            <div className="relative z-10">
+              <div className="bg-white/15 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-2xl">
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-bold text-center">ابحث عن أي شيء</h3>
+                  <h3 className="text-2xl font-bold text-center text-white drop-shadow-md">ابحث عن أي شيء</h3>
                   <div className="relative">
                     <Input
                       placeholder="ابحث عن المنتجات، المتاجر، الخدمات..."
-                      className="w-full pr-12 py-6 text-lg bg-white text-gray-900 border-0 rounded-xl"
+                      className="w-full pr-12 py-6 text-lg bg-white text-gray-900 border-0 rounded-xl shadow-lg"
                     />
                     <Button 
-                      className="absolute right-2 top-2 bg-sudan-blue hover:bg-sudan-blue/90 rounded-lg"
+                      className="absolute right-2 top-2 bg-sudan-blue hover:bg-sudan-blue/90 rounded-lg shadow-md"
                       size="icon"
                     >
                       <Search className="w-5 h-5" />
@@ -175,7 +193,7 @@ export default function Home() {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {["هاتف", "لابتوب", "ملابس", "طعام", "كتب"].map((tag) => (
-                      <Badge key={tag} variant="secondary" className="bg-white/20 text-white hover:bg-white/30">
+                      <Badge key={tag} variant="secondary" className="bg-white/25 text-white hover:bg-white/35 border-white/20">
                         {tag}
                       </Badge>
                     ))}
