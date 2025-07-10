@@ -4,9 +4,9 @@ import { eq } from "drizzle-orm";
 // Database imports for DatabaseStorage class
 let db: any;
 try {
-  db = require("./db").db;
+  db = require("./db-sqlite").db;
+  console.log("Using SQLite database");
 } catch (error) {
-  // Database not available, using in-memory storage
   console.log("Database not available, using in-memory storage");
 }
 
@@ -206,9 +206,14 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const user: User = {
       id: this.nextId++,
-      createdAt: new Date(),
+      username: insertUser.username,
+      password: insertUser.password,
+      email: insertUser.email,
+      fullName: insertUser.fullName,
+      phone: insertUser.phone ?? null,
+      role: insertUser.role ?? 'customer',
       isActive: true,
-      ...insertUser
+      createdAt: new Date(),
     };
     this.users.push(user);
     return user;
@@ -254,9 +259,14 @@ export class MemStorage implements IStorage {
   async createStore(insertStore: InsertStore): Promise<Store> {
     const store: Store = {
       id: this.nextId++,
-      createdAt: new Date(),
+      name: insertStore.name,
+      description: insertStore.description ?? null,
+      ownerId: insertStore.ownerId,
+      category: insertStore.category,
+      address: insertStore.address ?? null,
+      phone: insertStore.phone ?? null,
       isActive: true,
-      ...insertStore
+      createdAt: new Date(),
     };
     this.stores.push(store);
     return store;
@@ -298,9 +308,13 @@ export class MemStorage implements IStorage {
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const product: Product = {
       id: this.nextId++,
-      createdAt: new Date(),
+      name: insertProduct.name,
+      description: insertProduct.description ?? null,
+      price: insertProduct.price,
+      storeId: insertProduct.storeId,
+      category: insertProduct.category,
       isActive: true,
-      ...insertProduct
+      createdAt: new Date(),
     };
     this.products.push(product);
     return product;
@@ -342,9 +356,13 @@ export class MemStorage implements IStorage {
   async createService(insertService: InsertService): Promise<Service> {
     const service: Service = {
       id: this.nextId++,
-      createdAt: new Date(),
+      name: insertService.name,
+      description: insertService.description ?? null,
+      price: insertService.price ?? null,
+      storeId: insertService.storeId,
+      category: insertService.category,
       isActive: true,
-      ...insertService
+      createdAt: new Date(),
     };
     this.services.push(service);
     return service;
@@ -382,9 +400,13 @@ export class MemStorage implements IStorage {
   async createJob(insertJob: InsertJob): Promise<Job> {
     const job: Job = {
       id: this.nextId++,
-      createdAt: new Date(),
+      title: insertJob.title,
+      description: insertJob.description ?? null,
+      salary: insertJob.salary ?? null,
+      location: insertJob.location ?? null,
+      storeId: insertJob.storeId,
       isActive: true,
-      ...insertJob
+      createdAt: new Date(),
     };
     this.jobs.push(job);
     return job;
@@ -683,4 +705,4 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = db ? new DatabaseStorage() : new MemStorage();
