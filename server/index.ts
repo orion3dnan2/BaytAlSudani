@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import authRoutes from "./routes/auth";
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Setup authentication routes
+app.use('/api/auth', authRoutes);
 
 (async () => {
   const server = await registerRoutes(app);

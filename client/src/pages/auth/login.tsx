@@ -44,7 +44,7 @@ export default function Login() {
       // Redirect based on user role
       if (result.user.role === 'admin') {
         setLocation('/admin/dashboard');
-      } else if (result.user.role === 'store_owner') {
+      } else if (result.user.role === 'merchant') {
         setLocation('/merchant/dashboard');
       } else {
         setLocation('/');

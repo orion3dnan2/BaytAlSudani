@@ -134,7 +134,7 @@ router.get('/me', async (req: Request, res: Response) => {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: number; role: string };
-    const user = await storage.getUser(decoded.userId);
+    const user = await storage.getLegacyUser(decoded.userId);
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid token' });
