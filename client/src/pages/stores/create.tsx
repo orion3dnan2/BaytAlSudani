@@ -26,17 +26,41 @@ const storeSchema = z.object({
 type StoreForm = z.infer<typeof storeSchema>;
 
 const storeCategories = [
-  'marketplace',
+  'electronics',
+  'fashion',
+  'food',
+  'home-garden',
+  'health-beauty',
+  'sports',
+  'books',
+  'toys',
+  'automotive',
+  'jewelry',
+  'handicrafts',
   'services',
-  'jobs',
-  'announcements'
+  'education',
+  'technology',
+  'agriculture',
+  'other'
 ];
 
 const categoryLabels = {
-  marketplace: 'متجر تجاري',
-  services: 'خدمات',
-  jobs: 'وظائف',
-  announcements: 'إعلانات'
+  electronics: 'الإلكترونيات',
+  fashion: 'الأزياء والملابس',
+  food: 'المواد الغذائية',
+  'home-garden': 'المنزل والحديقة',
+  'health-beauty': 'الصحة والجمال',
+  sports: 'الرياضة واللياقة',
+  books: 'الكتب والقرطاسية',
+  toys: 'الألعاب والأطفال',
+  automotive: 'السيارات وقطع الغيار',
+  jewelry: 'المجوهرات والإكسسوارات',
+  handicrafts: 'الحرف اليدوية والتراث',
+  services: 'الخدمات المهنية',
+  education: 'التعليم والتدريب',
+  technology: 'التكنولوجيا والبرمجيات',
+  agriculture: 'الزراعة والثروة الحيوانية',
+  other: 'أخرى'
 };
 
 export default function CreateStore() {
