@@ -95,7 +95,7 @@ export default function Landing() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6"
+                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6 bg-[#3c445c]"
                   onClick={() => window.location.href = '/api/login'}
                 >
                   <Users className="w-5 h-5 mr-2" />
