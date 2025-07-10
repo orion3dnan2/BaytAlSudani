@@ -247,6 +247,9 @@ This architecture provides a solid foundation for a marketplace platform with ro
 - **Navigation Enhancement**: Added separate "المتاجر" (Stores) and "المطاعم" (Restaurants) sections in main navigation
 - **Stores Page**: Created dedicated stores page filtering out restaurants, showing only general retail stores
 - **Restaurants Page**: Created specialized restaurants page with orange theme and restaurant-specific features
-- **Demo Data**: Added restaurant demo data including "مطعم الأصالة السودانية" with traditional Sudanese meals
+- **Demo Data**: Added comprehensive demo data: 6 stores/restaurants, 10 products, 4 services, 5 jobs, 6 announcements
 - **Authentication Fix**: Resolved store creation authentication issues for merchant users
 - **Icon Enhancement**: Added ChefHat icon for restaurants to distinguish from general stores
+- **Real-time Updates**: Added automatic refresh functionality to show newly created stores immediately
+- **Category Filtering Fix**: Fixed filtering logic to properly display restaurants and stores in correct sections
+- **User Experience**: Added auto-redirect and success messages for store creation workflow

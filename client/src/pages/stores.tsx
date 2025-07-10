@@ -31,8 +31,10 @@ export default function Stores() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("newest");
 
-  const { data: stores, isLoading } = useQuery({
+  const { data: stores, isLoading, refetch } = useQuery({
     queryKey: ['/api/stores'],
+    refetchOnWindowFocus: true,
+    refetchInterval: 5000, // Refresh every 5 seconds
   });
 
   const categories = [
@@ -67,7 +69,7 @@ export default function Stores() {
     const matchesCategory = selectedCategory === "all" || store.category === selectedCategory;
     
     // Exclude restaurant stores from general stores page
-    const isNotRestaurant = store.category !== "restaurants-cafes" && store.category !== "مطاعم وكافيهات";
+    const isNotRestaurant = store.category !== "restaurants-cafes" && store.category !== "مطاعم وكافيهات" && store.category !== "restaurants_cafes";
     
     return matchesSearch && matchesCategory && isNotRestaurant;
   });

@@ -101,11 +101,18 @@ export default function CreateStore() {
       
       toast({
         title: 'تم إنشاء المتجر',
-        description: 'تم إضافة المتجر بنجاح',
+        description: `تم إضافة متجر "${newStore.name}" بنجاح`,
       });
       
-      // Redirect to merchant dashboard
-      setLocation('/merchant/dashboard');
+      // Force refresh of stores data
+      window.location.reload();
+      
+      // Redirect based on store category
+      if (newStore.category === 'restaurants-cafes') {
+        setLocation('/restaurants');
+      } else {
+        setLocation('/merchant/dashboard');
+      }
     } catch (error) {
       toast({
         title: 'خطأ في إنشاء المتجر',
