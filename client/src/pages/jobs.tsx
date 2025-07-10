@@ -100,9 +100,7 @@ export default function Jobs() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">فرص العمل</h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              اعثر على الوظيفة المناسبة لك في أفضل الشركات السودانية
-            </p>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">اعثر على الوظيفة المناسبة لك في أفضل الشركات</p>
           </div>
 
           {/* Search Bar */}
@@ -124,7 +122,6 @@ export default function Jobs() {
           </div>
         </div>
       </section>
-
       {/* Filters and Controls */}
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
@@ -200,7 +197,6 @@ export default function Jobs() {
           </div>
         </div>
       </section>
-
       {/* Results Section */}
       <section className="py-8">
         <div className="container mx-auto px-4">
@@ -353,7 +349,6 @@ export default function Jobs() {
           )}
         </div>
       </section>
-
       {/* Job Categories */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
