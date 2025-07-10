@@ -99,40 +99,48 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع المستخدمين المسجلين في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">الاسم</th>
-                        <th className="border border-gray-300 p-2 text-right">البريد الإلكتروني</th>
-                        <th className="border border-gray-300 p-2 text-right">الدور</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ التسجيل</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {users.map((user: any) => (
-                        <tr key={user.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{user.fullName}</td>
-                          <td className="border border-gray-300 p-2">{user.email}</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={user.role === 'admin' ? 'default' : user.role === 'store_owner' ? 'secondary' : 'outline'}>
-                              {user.role === 'admin' ? 'مسؤول' : user.role === 'store_owner' ? 'صاحب متجر' : 'عميل'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={user.isActive ? 'default' : 'destructive'}>
-                              {user.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(user.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {users.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا يوجد مستخدمون</p>
+                    <p className="text-gray-400 text-sm">لم يتم تسجيل أي مستخدمين في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">الاسم</th>
+                          <th className="border border-gray-300 p-2 text-right">البريد الإلكتروني</th>
+                          <th className="border border-gray-300 p-2 text-right">الدور</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ التسجيل</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {users.map((user: any) => (
+                          <tr key={user.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{user.fullName}</td>
+                            <td className="border border-gray-300 p-2">{user.email}</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={user.role === 'admin' ? 'default' : user.role === 'store_owner' ? 'secondary' : 'outline'}>
+                                {user.role === 'admin' ? 'مسؤول' : user.role === 'store_owner' ? 'صاحب متجر' : 'عميل'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={user.isActive ? 'default' : 'destructive'}>
+                                {user.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(user.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -144,36 +152,44 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع المتاجر المسجلة في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">اسم المتجر</th>
-                        <th className="border border-gray-300 p-2 text-right">الفئة</th>
-                        <th className="border border-gray-300 p-2 text-right">العنوان</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ الإنشاء</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {stores.map((store: any) => (
-                        <tr key={store.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{store.name}</td>
-                          <td className="border border-gray-300 p-2">{store.category}</td>
-                          <td className="border border-gray-300 p-2">{store.address}</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={store.isActive ? 'default' : 'destructive'}>
-                              {store.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(store.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {stores.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Store className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا توجد متاجر</p>
+                    <p className="text-gray-400 text-sm">لم يتم تسجيل أي متاجر في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">اسم المتجر</th>
+                          <th className="border border-gray-300 p-2 text-right">الفئة</th>
+                          <th className="border border-gray-300 p-2 text-right">العنوان</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ الإنشاء</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {stores.map((store: any) => (
+                          <tr key={store.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{store.name}</td>
+                            <td className="border border-gray-300 p-2">{store.category}</td>
+                            <td className="border border-gray-300 p-2">{store.address}</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={store.isActive ? 'default' : 'destructive'}>
+                                {store.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(store.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -185,36 +201,44 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع المنتجات في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">اسم المنتج</th>
-                        <th className="border border-gray-300 p-2 text-right">السعر</th>
-                        <th className="border border-gray-300 p-2 text-right">الفئة</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {products.map((product: any) => (
-                        <tr key={product.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{product.name}</td>
-                          <td className="border border-gray-300 p-2">{product.price} جنيه</td>
-                          <td className="border border-gray-300 p-2">{product.category}</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={product.isActive ? 'default' : 'destructive'}>
-                              {product.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(product.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {products.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا توجد منتجات</p>
+                    <p className="text-gray-400 text-sm">لم يتم إضافة أي منتجات في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">اسم المنتج</th>
+                          <th className="border border-gray-300 p-2 text-right">السعر</th>
+                          <th className="border border-gray-300 p-2 text-right">الفئة</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {products.map((product: any) => (
+                          <tr key={product.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{product.name}</td>
+                            <td className="border border-gray-300 p-2">{product.price} جنيه</td>
+                            <td className="border border-gray-300 p-2">{product.category}</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={product.isActive ? 'default' : 'destructive'}>
+                                {product.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(product.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -226,36 +250,44 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع الخدمات في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">اسم الخدمة</th>
-                        <th className="border border-gray-300 p-2 text-right">السعر</th>
-                        <th className="border border-gray-300 p-2 text-right">الفئة</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {services.map((service: any) => (
-                        <tr key={service.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{service.name}</td>
-                          <td className="border border-gray-300 p-2">{service.price} جنيه</td>
-                          <td className="border border-gray-300 p-2">{service.category}</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={service.isActive ? 'default' : 'destructive'}>
-                              {service.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(service.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {services.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Briefcase className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا توجد خدمات</p>
+                    <p className="text-gray-400 text-sm">لم يتم إضافة أي خدمات في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">اسم الخدمة</th>
+                          <th className="border border-gray-300 p-2 text-right">السعر</th>
+                          <th className="border border-gray-300 p-2 text-right">الفئة</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {services.map((service: any) => (
+                          <tr key={service.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{service.name}</td>
+                            <td className="border border-gray-300 p-2">{service.price} جنيه</td>
+                            <td className="border border-gray-300 p-2">{service.category}</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={service.isActive ? 'default' : 'destructive'}>
+                                {service.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(service.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -267,36 +299,44 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع الوظائف في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">عنوان الوظيفة</th>
-                        <th className="border border-gray-300 p-2 text-right">الراتب</th>
-                        <th className="border border-gray-300 p-2 text-right">الموقع</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {jobs.map((job: any) => (
-                        <tr key={job.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{job.title}</td>
-                          <td className="border border-gray-300 p-2">{job.salary} جنيه</td>
-                          <td className="border border-gray-300 p-2">{job.location}</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={job.isActive ? 'default' : 'destructive'}>
-                              {job.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(job.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {jobs.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Briefcase className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا توجد وظائف</p>
+                    <p className="text-gray-400 text-sm">لم يتم إضافة أي وظائف في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">عنوان الوظيفة</th>
+                          <th className="border border-gray-300 p-2 text-right">الراتب</th>
+                          <th className="border border-gray-300 p-2 text-right">الموقع</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {jobs.map((job: any) => (
+                          <tr key={job.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{job.title}</td>
+                            <td className="border border-gray-300 p-2">{job.salary} جنيه</td>
+                            <td className="border border-gray-300 p-2">{job.location}</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={job.isActive ? 'default' : 'destructive'}>
+                                {job.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(job.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -308,34 +348,42 @@ export default function AdminDashboard() {
                 <CardDescription>قائمة جميع الإعلانات في النظام</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                      <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2 text-right">عنوان الإعلان</th>
-                        <th className="border border-gray-300 p-2 text-right">المحتوى</th>
-                        <th className="border border-gray-300 p-2 text-right">الحالة</th>
-                        <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {announcements.map((announcement: any) => (
-                        <tr key={announcement.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">{announcement.title}</td>
-                          <td className="border border-gray-300 p-2">{announcement.content.substring(0, 100)}...</td>
-                          <td className="border border-gray-300 p-2">
-                            <Badge variant={announcement.isActive ? 'default' : 'destructive'}>
-                              {announcement.isActive ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                          </td>
-                          <td className="border border-gray-300 p-2">
-                            {new Date(announcement.createdAt).toLocaleDateString('ar-SA')}
-                          </td>
+                {announcements.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">لا توجد إعلانات</p>
+                    <p className="text-gray-400 text-sm">لم يتم إضافة أي إعلانات في النظام بعد</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-2 text-right">عنوان الإعلان</th>
+                          <th className="border border-gray-300 p-2 text-right">المحتوى</th>
+                          <th className="border border-gray-300 p-2 text-right">الحالة</th>
+                          <th className="border border-gray-300 p-2 text-right">تاريخ الإضافة</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {announcements.map((announcement: any) => (
+                          <tr key={announcement.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 p-2">{announcement.title}</td>
+                            <td className="border border-gray-300 p-2">{announcement.content.substring(0, 100)}...</td>
+                            <td className="border border-gray-300 p-2">
+                              <Badge variant={announcement.isActive ? 'default' : 'destructive'}>
+                                {announcement.isActive ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                            </td>
+                            <td className="border border-gray-300 p-2">
+                              {new Date(announcement.createdAt).toLocaleDateString('ar-SA')}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
