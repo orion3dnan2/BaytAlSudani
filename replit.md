@@ -235,6 +235,30 @@ This architecture provides a solid foundation for a marketplace platform with ro
 - **Merchant-Specific UI**: Added gradient styling and special sections for store owners
 - **Seamless Store Creation**: Direct pathways for merchants to create and manage stores
 
+### July 10, 2025 - Major Project Reorganization for Mobile + PHP Architecture
+- **Project Structure Reorganization**: Completely restructured project into three main directories:
+  - `admin/` - PHP-based admin dashboard with session protection
+  - `api/` - JSON-only PHP API endpoints for mobile app integration
+  - `mobile_app/` - React Native and React web applications
+- **PHP Admin Dashboard**: Created complete PHP admin interface with:
+  - `dashboard.php` - Main admin dashboard with statistics
+  - `login_admin.php` - Secure admin login with session management
+  - `manage_users.php` - User management (activate/deactivate, role changes)
+  - `logout.php` - Secure logout functionality
+- **RESTful API Endpoints**: Built comprehensive PHP API structure:
+  - Authentication endpoints (login, register)
+  - CRUD operations for stores, products, services, jobs, announcements
+  - CORS support for mobile app integration
+  - JSON-only responses with proper error handling
+- **Mobile App Structure**: Organized mobile applications:
+  - Moved React Native files to `mobile_app/` root
+  - Moved React web app to `mobile_app/web/`
+  - Maintained package.json for mobile dependencies
+- **Database Configuration**: Created centralized PHP database configuration with PostgreSQL support
+- **Security Enhancement**: Implemented proper session management, CORS headers, and input validation
+- **Documentation**: Created comprehensive README.md explaining the new architecture
+- **Migration Completed**: Successfully migrated from Replit Agent to standard Replit environment
+
 ### July 10, 2025 - Database Setup and Enhanced Store Categories
 - **Database Support**: Added comprehensive PostgreSQL database support with flexible fallback to in-memory storage
 - **Health Monitoring**: Added `/api/health` and `/api/db-status` endpoints for monitoring database connection
