@@ -73,6 +73,123 @@ export class MemStorage implements IStorage {
   private announcements: Announcement[] = [];
   private nextId = 1;
 
+  constructor() {
+    // Initialize with some demo data
+    this.initializeDemoData();
+  }
+
+  private initializeDemoData() {
+    // Create demo users
+    const adminUser: User = {
+      id: 1,
+      username: 'admin',
+      password: '$2b$10$demo.password.hash',
+      email: 'admin@example.com',
+      fullName: 'مدير النظام',
+      phone: '123456789',
+      role: 'admin',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const storeOwner: User = {
+      id: 2,
+      username: 'merchant1',
+      password: '$2b$10$demo.password.hash',
+      email: 'merchant@example.com',
+      fullName: 'أحمد التاجر',
+      phone: '987654321',
+      role: 'store_owner',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const customer: User = {
+      id: 3,
+      username: 'customer1',
+      password: '$2b$10$demo.password.hash',
+      email: 'customer@example.com',
+      fullName: 'فاطمة العميل',
+      phone: '555666777',
+      role: 'customer',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.users = [adminUser, storeOwner, customer];
+
+    // Create demo stores
+    const demoStore: Store = {
+      id: 1,
+      name: 'متجر الأحذية السودانية',
+      description: 'متجر متخصص في الأحذية التراثية والعصرية',
+      ownerId: 2,
+      category: 'أحذية ولباس',
+      address: 'الخرطوم - شارع الجمهورية',
+      phone: '0183456789',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.stores = [demoStore];
+
+    // Create demo products
+    const demoProduct: Product = {
+      id: 1,
+      name: 'حذاء جلدي سوداني',
+      description: 'حذاء جلدي طبيعي مصنوع يدوياً بالطرق التقليدية',
+      price: '250',
+      storeId: 1,
+      category: 'أحذية رجالي',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.products = [demoProduct];
+
+    // Create demo services
+    const demoService: Service = {
+      id: 1,
+      name: 'خدمة تفصيل الأحذية',
+      description: 'تفصيل أحذية حسب الطلب والمقاس',
+      price: '400',
+      storeId: 1,
+      category: 'خدمات تفصيل',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.services = [demoService];
+
+    // Create demo jobs
+    const demoJob: Job = {
+      id: 1,
+      title: 'مطلوب خبير في صناعة الأحذية',
+      description: 'نبحث عن خبير في صناعة الأحذية التقليدية',
+      salary: '1500',
+      location: 'الخرطوم',
+      storeId: 1,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.jobs = [demoJob];
+
+    // Create demo announcements
+    const demoAnnouncement: Announcement = {
+      id: 1,
+      title: 'عرض خاص للعيد',
+      content: 'خصم 30% على جميع المنتجات بمناسبة العيد المبارك',
+      storeId: 1,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.announcements = [demoAnnouncement];
+
+    this.nextId = 4; // Start from 4 since we have 3 initial users
+  }
+
   // Users
   async getUser(id: number): Promise<User | undefined> {
     return this.users.find(u => u.id === id);

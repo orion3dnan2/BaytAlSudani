@@ -64,6 +64,22 @@ export default function Home() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
+                    {user?.role === 'admin' && (
+                      <DropdownMenuItem asChild>
+                        <Link href="/admin/dashboard">
+                          <Settings className="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                          لوحة تحكم المسؤول
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                    {user?.role === 'store_owner' && (
+                      <DropdownMenuItem asChild>
+                        <Link href="/merchant/dashboard">
+                          <ShoppingCart className="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2" />
+                          لوحة تحكم التاجر
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem onClick={logout}>
                       <LogOut className="w-4 h-4 ml-2 rtl:ml-0 rtl:mr-2" />
                       تسجيل الخروج

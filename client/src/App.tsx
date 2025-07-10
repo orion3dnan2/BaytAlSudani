@@ -12,6 +12,8 @@ import Jobs from "@/pages/jobs";
 import Announcements from "@/pages/announcements";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
+import AdminDashboard from "@/pages/admin/dashboard";
+import MerchantDashboard from "@/pages/merchant/dashboard";
 
 function Router() {
   return (
@@ -23,6 +25,8 @@ function Router() {
       <Route path="/announcements" component={Announcements} />
       <Route path="/auth/login" component={Login} />
       <Route path="/auth/register" component={Register} />
+      <Route path="/admin/dashboard" component={AdminDashboard} />
+      <Route path="/merchant/dashboard" component={MerchantDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
