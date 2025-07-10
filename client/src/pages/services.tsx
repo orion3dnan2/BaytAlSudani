@@ -23,7 +23,7 @@ import {
   Phone,
   Mail,
   User,
-  Tool
+  Wrench
 } from "lucide-react";
 
 export default function Services() {
@@ -229,7 +229,7 @@ export default function Services() {
                           </p>
                         </div>
                         <div className="w-12 h-12 bg-sudan-blue/10 rounded-full flex items-center justify-center mr-4">
-                          <Tool className="w-6 h-6 text-sudan-blue" />
+                          <Wrench className="w-6 h-6 text-sudan-blue" />
                         </div>
                       </div>
 
