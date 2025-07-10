@@ -135,7 +135,7 @@ export default function Home() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6"
+                  className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8 py-6 bg-[#871414]"
                   asChild
                 >
                   <Link href="/register">

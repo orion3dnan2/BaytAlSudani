@@ -98,6 +98,105 @@
   }
 }
 
+/* Sudanese Heritage Gradient Classes */
+@layer utilities {
+  .bg-gradient-sudan-heritage {
+    background: linear-gradient(135deg, 
+      hsl(207, 87%, 21%) 0%,     /* Sudan Blue */
+      hsl(207, 89%, 18%) 25%,    /* Darker Blue */
+      hsl(15, 78%, 48%) 50%,     /* Sudan Red */
+      hsl(15, 82%, 42%) 75%,     /* Darker Red */
+      hsl(207, 87%, 21%) 100%    /* Back to Blue */
+    );
+  }
+  
+  .bg-gradient-sudan-gold {
+    background: linear-gradient(135deg, 
+      hsl(45, 85%, 58%) 0%,      /* Sudan Gold */
+      hsl(45, 88%, 52%) 50%,     /* Darker Gold */
+      hsl(45, 91%, 46%) 100%     /* Even Darker Gold */
+    );
+  }
+  
+  .bg-gradient-sudan-sand {
+    background: linear-gradient(135deg, 
+      hsl(32, 25%, 88%) 0%,      /* Light Sand */
+      hsl(32, 20%, 58%) 100%     /* Darker Sand */
+    );
+  }
+  
+  .pattern-sudanese-geometric {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    background-size: 60px 60px;
+  }
+  
+  .text-sudan-blue {
+    color: hsl(207, 87%, 21%);
+  }
+  
+  .text-sudan-red {
+    color: hsl(15, 78%, 48%);
+  }
+  
+  .text-sudan-gold {
+    color: hsl(45, 85%, 58%);
+  }
+  
+  .text-sudan-sand {
+    color: hsl(32, 18%, 68%);
+  }
+  
+  .bg-sudan-blue {
+    background-color: hsl(207, 87%, 21%);
+  }
+  
+  .bg-sudan-red {
+    background-color: hsl(15, 78%, 48%);
+  }
+  
+  .bg-sudan-gold {
+    background-color: hsl(45, 85%, 58%);
+  }
+  
+  .bg-sudan-sand {
+    background-color: hsl(32, 18%, 68%);
+  }
+  
+  .border-sudan-blue {
+    border-color: hsl(207, 87%, 21%);
+  }
+  
+  .border-sudan-red {
+    border-color: hsl(15, 78%, 48%);
+  }
+  
+  .border-sudan-gold {
+    border-color: hsl(45, 85%, 58%);
+  }
+  
+  .border-sudan-sand {
+    border-color: hsl(32, 18%, 68%);
+  }
+  
+  .hover\:bg-sudan-blue:hover {
+    background-color: hsl(207, 87%, 21%);
+  }
+  
+  .hover\:bg-sudan-blue\/90:hover {
+    background-color: hsl(207, 87%, 21%, 0.9);
+  }
+  
+  .hover\:bg-sudan-gold:hover {
+    background-color: hsl(45, 85%, 58%);
+  }
+  
+  .hover\:bg-sudan-gold\/90:hover {
+    background-color: hsl(45, 85%, 58%, 0.9);
+  }
+}
+
 @layer utilities {
   .font-arabic {
     font-family: 'Cairo', 'Tajawal', Arial, sans-serif;

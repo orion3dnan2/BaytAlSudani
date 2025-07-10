@@ -1,138 +1,334 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ShoppingCart, Store, Package, MapPin } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import ProductCard from "@/components/ProductCard";
+import StoreCard from "@/components/StoreCard";
+import { 
+  Search, 
+  Filter, 
+  Grid, 
+  List, 
+  SlidersHorizontal,
+  Package,
+  Store,
+  TrendingUp,
+  Star
+} from "lucide-react";
 
 export default function Marketplace() {
-  const { data: stores = [], isLoading: storesLoading } = useQuery({
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState("newest");
+  const [activeTab, setActiveTab] = useState<"products" | "stores">("products");
+
+  const { data: stores, isLoading: storesLoading } = useQuery({
     queryKey: ['/api/stores'],
-    enabled: true,
   });
 
-  const { data: products = [], isLoading: productsLoading } = useQuery({
+  const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ['/api/products'],
-    enabled: true,
+  });
+
+  const categories = [
+    { value: "all", label: "جميع الفئات" },
+    { value: "إلكترونيات", label: "الإلكترونيات" },
+    { value: "أزياء", label: "الأزياء" },
+    { value: "منزل", label: "المنزل والحديقة" },
+    { value: "صحة", label: "الصحة والجمال" },
+    { value: "رياضة", label: "الرياضة" },
+    { value: "كتب", label: "الكتب" },
+    { value: "ألعاب", label: "الألعاب" },
+    { value: "سيارات", label: "السيارات" },
+  ];
+
+  const sortOptions = [
+    { value: "newest", label: "الأحدث" },
+    { value: "price-low", label: "السعر: من الأقل للأعلى" },
+    { value: "price-high", label: "السعر: من الأعلى للأقل" },
+    { value: "rating", label: "الأعلى تقييماً" },
+    { value: "popular", label: "الأكثر شعبية" },
+  ];
+
+  const filteredProducts = products?.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const filteredStores = stores?.filter(store => {
+    const matchesSearch = store.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         store.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || store.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
   if (storesLoading || productsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">جاري تحميل السوق...</p>
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse">
+            <div className="h-20 bg-gray-200 rounded-lg mb-8"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">السوق 🛒</h1>
-            <p className="text-xl text-gray-600">تسوق من المتاجر المحلية واكتشف منتجات متنوعة</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-sudan-heritage text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4">السوق الإلكتروني</h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              اكتشف أفضل المتاجر والمنتجات في السودان
+            </p>
           </div>
-          <Link href="/">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowRight className="w-4 h-4" />
-              العودة للصفحة الرئيسية
-            </Button>
-          </Link>
-        </div>
 
-        {/* Stores Section */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Store className="w-6 h-6" />
-            المتاجر المتاحة
-          </h2>
-          
-          {stores.length === 0 ? (
-            <Card className="max-w-md mx-auto">
-              <CardContent className="pt-6 text-center">
-                <Store className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">لا توجد متاجر</p>
-                <p className="text-gray-400 text-sm">لم يتم تسجيل أي متاجر بعد</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {stores.map((store: any) => (
-                <Card key={store.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Store className="w-5 h-5" />
-                      {store.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 mb-3">{store.description}</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <Package className="w-4 h-4" />
-                        {store.category}
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <MapPin className="w-4 h-4" />
-                        {store.address}
-                      </div>
-                      <Badge variant={store.isActive ? 'default' : 'destructive'}>
-                        {store.isActive ? 'نشط' : 'غير نشط'}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <Input
+                placeholder="ابحث عن المنتجات أو المتاجر..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pr-12 py-6 text-lg bg-white text-gray-900 border-0 rounded-xl"
+              />
+              <Button 
+                className="absolute right-2 top-2 bg-sudan-blue hover:bg-sudan-blue/90 rounded-lg"
+                size="icon"
+              >
+                <Search className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Filters and Controls */}
+      <section className="bg-white border-b">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            {/* Tabs */}
+            <div className="flex items-center space-x-2 space-x-reverse">
+              <Button
+                variant={activeTab === "products" ? "default" : "ghost"}
+                onClick={() => setActiveTab("products")}
+                className={activeTab === "products" ? "bg-sudan-blue text-white" : ""}
+              >
+                <Package className="w-4 h-4 mr-2" />
+                المنتجات ({filteredProducts?.length || 0})
+              </Button>
+              <Button
+                variant={activeTab === "stores" ? "default" : "ghost"}
+                onClick={() => setActiveTab("stores")}
+                className={activeTab === "stores" ? "bg-sudan-blue text-white" : ""}
+              >
+                <Store className="w-4 h-4 mr-2" />
+                المتاجر ({filteredStores?.length || 0})
+              </Button>
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="اختر الفئة" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="ترتيب حسب" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sortOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <div className="flex items-center space-x-2 space-x-reverse">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="icon"
+                  onClick={() => setViewMode("grid")}
+                >
+                  <Grid className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="icon"
+                  onClick={() => setViewMode("list")}
+                >
+                  <List className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Results Section */}
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          {/* Active Filters */}
+          {(searchQuery || selectedCategory !== "all") && (
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              <span className="text-sm text-gray-600">الفلاتر النشطة:</span>
+              {searchQuery && (
+                <Badge variant="secondary" className="bg-sudan-blue/10 text-sudan-blue">
+                  البحث: {searchQuery}
+                  <button 
+                    onClick={() => setSearchQuery("")}
+                    className="ml-2 text-xs hover:text-red-500"
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+              {selectedCategory !== "all" && (
+                <Badge variant="secondary" className="bg-sudan-blue/10 text-sudan-blue">
+                  الفئة: {categories.find(c => c.value === selectedCategory)?.label}
+                  <button 
+                    onClick={() => setSelectedCategory("all")}
+                    className="ml-2 text-xs hover:text-red-500"
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+            </div>
+          )}
+
+          {/* Products Tab */}
+          {activeTab === "products" && (
+            <div>
+              {filteredProducts && filteredProducts.length > 0 ? (
+                <div className={`grid gap-6 ${
+                  viewMode === "grid" 
+                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+                    : "grid-cols-1"
+                }`}>
+                  {filteredProducts.map((product) => (
+                    <ProductCard 
+                      key={product.id} 
+                      product={product} 
+                      className={viewMode === "list" ? "md:flex md:items-center" : ""}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    لا توجد منتجات
+                  </h3>
+                  <p className="text-gray-600">
+                    {searchQuery || selectedCategory !== "all" 
+                      ? "لا توجد منتجات تطابق البحث المحدد"
+                      : "لا توجد منتجات متاحة حالياً"
+                    }
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Stores Tab */}
+          {activeTab === "stores" && (
+            <div>
+              {filteredStores && filteredStores.length > 0 ? (
+                <div className={`grid gap-6 ${
+                  viewMode === "grid" 
+                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
+                    : "grid-cols-1"
+                }`}>
+                  {filteredStores.map((store) => (
+                    <StoreCard 
+                      key={store.id} 
+                      store={store} 
+                      className={viewMode === "list" ? "md:flex md:items-center" : ""}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16">
+                  <Store className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    لا توجد متاجر
+                  </h3>
+                  <p className="text-gray-600">
+                    {searchQuery || selectedCategory !== "all" 
+                      ? "لا توجد متاجر تطابق البحث المحدد"
+                      : "لا توجد متاجر متاحة حالياً"
+                    }
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
+      </section>
 
-        {/* Products Section */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Package className="w-6 h-6" />
-            المنتجات المتاحة
+      {/* Popular Categories */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+            الفئات الشائعة
           </h2>
-          
-          {products.length === 0 ? (
-            <Card className="max-w-md mx-auto">
-              <CardContent className="pt-6 text-center">
-                <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">لا توجد منتجات</p>
-                <p className="text-gray-400 text-sm">لم يتم إضافة أي منتجات بعد</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product: any) => (
-                <Card key={product.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <CardTitle>{product.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 mb-3">{product.description}</p>
-                    <div className="space-y-2">
-                      <div className="text-lg font-bold text-green-600">
-                        {product.price} جنيه
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        الفئة: {product.category}
-                      </div>
-                      <Badge variant={product.isActive ? 'default' : 'destructive'}>
-                        {product.isActive ? 'متوفر' : 'غير متوفر'}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {categories.slice(1, 7).map((category) => (
+              <Card 
+                key={category.value}
+                className="hover:shadow-lg transition-all duration-300 cursor-pointer border-0 shadow-md"
+                onClick={() => setSelectedCategory(category.value)}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="text-3xl mb-2">
+                    {category.value === "إلكترونيات" && "📱"}
+                    {category.value === "أزياء" && "👕"}
+                    {category.value === "منزل" && "🏠"}
+                    {category.value === "صحة" && "💄"}
+                    {category.value === "رياضة" && "⚽"}
+                    {category.value === "كتب" && "📚"}
+                  </div>
+                  <h3 className="font-semibold text-gray-900 text-sm">
+                    {category.label}
+                  </h3>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
