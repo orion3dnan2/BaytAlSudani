@@ -25,7 +25,9 @@ import {
   Settings,
   LogOut,
   UserCircle,
-  Heart
+  Heart,
+  Plus,
+  Package
 } from 'lucide-react';
 
 export default function Navigation() {
@@ -149,12 +151,26 @@ export default function Navigation() {
                     </DropdownMenuItem>
                   )}
                   {(user?.role === 'merchant' || user?.role === 'store_owner') && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/merchant/dashboard" className="w-full">
-                        <Store className="mr-2 h-4 w-4" />
-                        <span>لوحة التاجر</span>
-                      </Link>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link href="/merchant/dashboard" className="w-full">
+                          <Store className="mr-2 h-4 w-4" />
+                          <span>لوحة التاجر</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/stores/create" className="w-full">
+                          <Plus className="mr-2 h-4 w-4" />
+                          <span>إنشاء متجر</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/products/create" className="w-full">
+                          <Package className="mr-2 h-4 w-4" />
+                          <span>إضافة منتج</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => {

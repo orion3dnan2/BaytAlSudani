@@ -61,7 +61,7 @@ export const requireStoreOwner = (req: AuthenticatedRequest, res: Response, next
 
 // Middleware to check if user has customer role (or higher)
 export const requireCustomer = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-  if (!req.user || !['customer', 'store_owner', 'admin'].includes(req.user.role)) {
+  if (!req.user || !['customer', 'merchant', 'store_owner', 'admin'].includes(req.user.role)) {
     return res.status(403).json({ error: 'Customer access required' });
   }
   next();

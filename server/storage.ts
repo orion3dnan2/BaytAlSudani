@@ -88,7 +88,7 @@ export class MemStorage implements IStorage {
       password: '$2b$10$/F6rukuamJgtsR39GfvMUeCUomJEjNfybAhc9NQmVRPt3AVOVg1Ea', // password: admin
       email: 'admin@example.com',
       fullName: 'مدير النظام',
-      phone: '123456789',
+      phone: '0123456789',
       role: 'admin',
       isActive: true,
       createdAt: new Date(),
@@ -98,10 +98,10 @@ export class MemStorage implements IStorage {
       id: 2,
       username: 'merchant1',
       password: '$2b$10$/F6rukuamJgtsR39GfvMUeCUomJEjNfybAhc9NQmVRPt3AVOVg1Ea', // password: admin
-      email: 'merchant@example.com',
-      fullName: 'أحمد التاجر',
-      phone: '987654321',
-      role: 'store_owner',
+      email: 'merchant1@example.com',
+      fullName: 'محمد التاجر',
+      phone: '0123456788',
+      role: 'merchant',
       isActive: true,
       createdAt: new Date(),
     };
@@ -112,7 +112,7 @@ export class MemStorage implements IStorage {
       password: '$2b$10$/F6rukuamJgtsR39GfvMUeCUomJEjNfybAhc9NQmVRPt3AVOVg1Ea', // password: admin
       email: 'customer@example.com',
       fullName: 'فاطمة العميل',
-      phone: '555666777',
+      phone: '0123456777',
       role: 'customer',
       isActive: true,
       createdAt: new Date(),
