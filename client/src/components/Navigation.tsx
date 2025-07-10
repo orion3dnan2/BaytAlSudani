@@ -59,7 +59,7 @@ export default function Navigation() {
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
               <span> </span>
-              <span>✉️ info@sudanhome.com</span>
+              <span> </span>
             </div>
           </div>
         </div>
