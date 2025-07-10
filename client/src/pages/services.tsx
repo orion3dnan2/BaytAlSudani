@@ -105,9 +105,7 @@ export default function Services() {
         <div className="relative container mx-auto px-4 z-10">
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">الخدمات المهنية</h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              احصل على خدمات متخصصة من أفضل مقدمي الخدمات في السودان
-            </p>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">احصل على خدمات متخصصة من أفضل مقدمي الخدمات</p>
           </div>
 
           {/* Search Bar */}
@@ -129,7 +127,6 @@ export default function Services() {
           </div>
         </div>
       </section>
-
       {/* Filters and Controls */}
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
@@ -192,7 +189,6 @@ export default function Services() {
           </div>
         </div>
       </section>
-
       {/* Results Section */}
       <section className="py-8">
         <div className="container mx-auto px-4">
@@ -324,7 +320,6 @@ export default function Services() {
           )}
         </div>
       </section>
-
       {/* Popular Service Categories */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
