@@ -24,20 +24,28 @@ function Router() {
 
   return (
     <Switch>
+      {/* Main routes - always available */}
+      <Route path="/marketplace" component={Marketplace} />
+      <Route path="/services" component={Services} />
+      <Route path="/jobs" component={Jobs} />
+      <Route path="/announcements" component={Announcements} />
+      
+      {/* Home route - conditional based on auth */}
       {isLoading || !isAuthenticated ? (
         <Route path="/" component={Landing} />
       ) : (
+        <Route path="/" component={Home} />
+      )}
+      
+      {/* Protected routes - only for authenticated users */}
+      {isAuthenticated && (
         <>
-          <Route path="/" component={Home} />
-          <Route path="/marketplace" component={Marketplace} />
-          <Route path="/services" component={Services} />
-          <Route path="/jobs" component={Jobs} />
-          <Route path="/announcements" component={Announcements} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/admin/stores/:id" component={StoreDetails} />
           <Route path="/merchant/dashboard" component={MerchantDashboard} />
         </>
       )}
+      
       {/* Legacy auth routes for existing system */}
       <Route path="/auth/login" component={Login} />
       <Route path="/auth/register" component={Register} />
