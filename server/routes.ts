@@ -6,6 +6,7 @@ import { authenticateToken, requireAdmin, requireStoreOwner, type AuthenticatedR
 import { insertStoreSchema, insertProductSchema, insertServiceSchema, insertJobSchema, insertAnnouncementSchema } from "@shared/schema";
 import { setupAuth } from "./replitAuth";
 import apiRoutes from "./routes/api";
+import healthRoutes from "./routes/health";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -13,6 +14,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Mobile API routes
   app.use('/api', apiRoutes);
+  
+  // Health check routes
+  app.use('/api', healthRoutes);
 
   // Auth routes handled by /api/auth routes in index.ts
 

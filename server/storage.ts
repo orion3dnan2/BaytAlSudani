@@ -503,12 +503,20 @@ export class DatabaseStorage implements IStorage {
   // User operations
   // (IMPORTANT) these user operations are mandatory for Replit Auth.
 
+  private checkDbConnection() {
+    if (!db) {
+      throw new Error('Database not initialized. Please set DATABASE_URL environment variable.');
+    }
+  }
+
   async getUser(id: string): Promise<User | undefined> {
+    this.checkDbConnection();
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
+    this.checkDbConnection();
     const [user] = await db
       .insert(users)
       .values(userData)
@@ -525,6 +533,7 @@ export class DatabaseStorage implements IStorage {
 
   // Legacy user operations (for existing system)
   async getLegacyUser(id: number): Promise<User | undefined> {
+    this.checkDbConnection();
     const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.id, id));
     return user || undefined;
   }
