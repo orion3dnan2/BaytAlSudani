@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import sudaneseMarketImage from "@assets/sudanese-market.jpg";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -94,11 +95,27 @@ export default function Marketplace() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-sudan-heritage text-white py-16">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden bg-gradient-sudan-heritage text-white py-16">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#871414]/80 via-[#871414]/70 to-[#871414]/85"></div>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+            style={{
+              backgroundImage: `url("${sudaneseMarketImage}")`,
+              backgroundPosition: "center center"
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#871414]/60 via-transparent to-[#871414]/60"></div>
+        </div>
+        
+        {/* Geometric Pattern Overlay */}
+        <div className="absolute inset-0 pattern-sudanese-geometric opacity-5"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">السوق السوداني </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">اكتشف أفضل المتاجر والمنتجات السودانية</p>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg">السوق السوداني</h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow-md">اكتشف أفضل المتاجر والمنتجات السودانية</p>
           </div>
 
           {/* Search Bar */}
@@ -108,10 +125,10 @@ export default function Marketplace() {
                 placeholder="ابحث عن المنتجات أو المتاجر..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pr-12 py-6 text-lg bg-white text-gray-900 border-0 rounded-xl"
+                className="w-full pr-12 py-6 text-lg bg-white/95 backdrop-blur-sm text-gray-900 border-0 rounded-xl shadow-lg"
               />
               <Button 
-                className="absolute right-2 top-2 bg-sudan-blue hover:bg-sudan-blue/90 rounded-lg"
+                className="absolute right-2 top-2 bg-sudan-blue hover:bg-sudan-blue/90 rounded-lg shadow-md"
                 size="icon"
               >
                 <Search className="w-5 h-5" />
