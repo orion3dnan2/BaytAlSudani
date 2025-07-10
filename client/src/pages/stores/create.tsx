@@ -88,7 +88,7 @@ export default function CreateStore() {
     }
   };
 
-  if (!user || (user.role !== 'merchant' && user.role !== 'admin')) {
+  if (!user || (user.role !== 'store_owner' && user.role !== 'admin')) {
     return (
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-2xl mx-auto">

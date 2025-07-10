@@ -10,30 +10,38 @@ import { useAuth } from "@/contexts/AuthContext";
 export default function MerchantDashboard() {
   const { user } = useAuth();
 
-  const { data: stores = [], isLoading: storesLoading } = useQuery({
+  const { data: allStores = [], isLoading: storesLoading } = useQuery({
     queryKey: ['/api/stores'],
     enabled: true,
   });
 
-  const { data: products = [], isLoading: productsLoading } = useQuery({
+  const { data: allProducts = [], isLoading: productsLoading } = useQuery({
     queryKey: ['/api/products'],
     enabled: true,
   });
 
-  const { data: services = [], isLoading: servicesLoading } = useQuery({
+  const { data: allServices = [], isLoading: servicesLoading } = useQuery({
     queryKey: ['/api/services'],
     enabled: true,
   });
 
-  const { data: jobs = [], isLoading: jobsLoading } = useQuery({
+  const { data: allJobs = [], isLoading: jobsLoading } = useQuery({
     queryKey: ['/api/jobs'],
     enabled: true,
   });
 
-  const { data: announcements = [], isLoading: announcementsLoading } = useQuery({
+  const { data: allAnnouncements = [], isLoading: announcementsLoading } = useQuery({
     queryKey: ['/api/announcements'],
     enabled: true,
   });
+
+  // Filter data to show only items owned by the current user
+  const stores = allStores.filter(store => store.ownerId === user?.id?.toString());
+  const storeIds = stores.map(store => store.id);
+  const products = allProducts.filter(product => storeIds.includes(product.storeId));
+  const services = allServices.filter(service => storeIds.includes(service.storeId));
+  const jobs = allJobs.filter(job => storeIds.includes(job.storeId));
+  const announcements = allAnnouncements.filter(announcement => storeIds.includes(announcement.storeId));
 
   if (storesLoading || productsLoading || servicesLoading || jobsLoading || announcementsLoading) {
     return (
@@ -104,9 +112,11 @@ export default function MerchantDashboard() {
                   <CardTitle>إدارة المتاجر</CardTitle>
                   <CardDescription>إدارة وتطوير متاجرك</CardDescription>
                 </div>
-                <Button className="bg-green-600 hover:bg-green-700">
-                  <Plus className="w-4 h-4 ml-2" />
-                  إضافة متجر جديد
+                <Button className="bg-green-600 hover:bg-green-700" asChild>
+                  <Link href="/stores/create">
+                    <Plus className="w-4 h-4 ml-2" />
+                    إضافة متجر جديد
+                  </Link>
                 </Button>
               </CardHeader>
               <CardContent>
