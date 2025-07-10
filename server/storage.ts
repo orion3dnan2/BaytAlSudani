@@ -83,7 +83,7 @@ export class MemStorage implements IStorage {
     const adminUser: User = {
       id: 1,
       username: 'admin',
-      password: '$2b$10$demo.password.hash',
+      password: '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', // password: admin
       email: 'admin@example.com',
       fullName: 'مدير النظام',
       phone: '123456789',
@@ -95,7 +95,7 @@ export class MemStorage implements IStorage {
     const storeOwner: User = {
       id: 2,
       username: 'merchant1',
-      password: '$2b$10$demo.password.hash',
+      password: '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', // password: admin
       email: 'merchant@example.com',
       fullName: 'أحمد التاجر',
       phone: '987654321',
@@ -107,7 +107,7 @@ export class MemStorage implements IStorage {
     const customer: User = {
       id: 3,
       username: 'customer1',
-      password: '$2b$10$demo.password.hash',
+      password: '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', // password: admin
       email: 'customer@example.com',
       fullName: 'فاطمة العميل',
       phone: '555666777',
