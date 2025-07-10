@@ -155,3 +155,9 @@ This architecture provides a solid foundation for a marketplace platform with ro
 - **Admin**: username: `admin`, password: `admin`
 - **Merchant**: username: `merchant1`, password: `admin`
 - **Customer**: username: `customer1`, password: `admin`
+
+### July 10, 2025 - Login System Fix
+- **Authentication Fixed**: Resolved fetch API parameter ordering issue in `apiRequest` function
+- **Password Hash Updated**: Fixed bcrypt password verification for demo users in PostgreSQL
+- **Database Connection**: Successfully connected to PostgreSQL with proper data persistence
+- **Demo Data**: All demo users now have working credentials with proper password hashing
