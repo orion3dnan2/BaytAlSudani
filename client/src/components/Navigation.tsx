@@ -58,7 +58,7 @@ export default function Navigation() {
               <span>🇸🇩 البيت السوداني - منصة التجارة الإلكترونية</span>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <span>📞 اتصل بنا: +249-123-456-789</span>
+              <span> </span>
               <span>✉️ info@sudanhome.com</span>
             </div>
           </div>
