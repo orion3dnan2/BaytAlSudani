@@ -162,16 +162,16 @@ export default function Home() {
 
               <div className="flex items-center space-x-8 space-x-reverse">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white drop-shadow-md">{stores?.length || 0}+</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">{stores?.length || 0}</div>
                   <div className="text-sm text-white/90">متجر</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white drop-shadow-md">{products?.length || 0}+</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">{products?.length || 0}</div>
                   <div className="text-sm text-white/90">منتج</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white drop-shadow-md">1000+</div>
-                  <div className="text-sm text-white/90">عميل</div>
+                  <div className="text-2xl font-bold text-white drop-shadow-md">{(services?.length || 0) + (jobs?.length || 0)}</div>
+                  <div className="text-sm text-white/90">خدمة</div>
                 </div>
               </div>
             </div>
@@ -325,20 +325,24 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-bold mb-2">{stores?.length || 0}+</div>
-              <div className="text-white/80">متجر نشط</div>
+              <Users className="w-8 h-8 text-sudan-gold mx-auto mb-3" />
+              <div className="text-4xl font-bold mb-2">{stores?.length || 0}</div>
+              <div className="text-white/80">تاجر موثوق</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold mb-2">{products?.length || 0}+</div>
+              <ShoppingBag className="w-8 h-8 text-sudan-gold mx-auto mb-3" />
+              <div className="text-4xl font-bold mb-2">{products?.length || 0}</div>
               <div className="text-white/80">منتج متاح</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold mb-2">1000+</div>
-              <div className="text-white/80">عميل راضي</div>
+              <Bell className="w-8 h-8 text-sudan-gold mx-auto mb-3" />
+              <div className="text-4xl font-bold mb-2">{announcements?.length || 0}</div>
+              <div className="text-white/80">إعلان يومي</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold mb-2">24/7</div>
-              <div className="text-white/80">خدمة العملاء</div>
+              <Briefcase className="w-8 h-8 text-sudan-gold mx-auto mb-3" />
+              <div className="text-4xl font-bold mb-2">{(services?.length || 0) + (jobs?.length || 0)}</div>
+              <div className="text-white/80">خدمة مهنية</div>
             </div>
           </div>
         </div>
