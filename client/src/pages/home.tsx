@@ -114,9 +114,7 @@ export default function Home() {
                   البيت السوداني
                 </h1>
                 <p className="text-xl lg:text-2xl text-white/90">سوداني وخليك .............. قدرها</p>
-                <p className="text-lg text-white/80 max-w-lg">
-                  تسوق واكتشف أفضل المنتجات والخدمات من التجار السودانيين. تجربة تسوق آمنة وسهلة مع توصيل سريع لجميع أنحاء السودان.
-                </p>
+                <p className="text-lg text-white/80 max-w-lg">تسوق واكتشف أفضل المنتجات والخدمات من التجار السودانيين. تجربة تسوق آمنة وسهلة مع توصيل سريع .</p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
