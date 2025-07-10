@@ -526,18 +526,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.username, username));
     return user || undefined;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
+    const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.email, email));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db
-      .insert(users)
+      .insert(legacyUsers)
       .values(insertUser)
       .returning();
     return user;
@@ -545,20 +545,20 @@ export class DatabaseStorage implements IStorage {
 
   async updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined> {
     const [user] = await db
-      .update(users)
+      .update(legacyUsers)
       .set(userData)
-      .where(eq(users.id, id))
+      .where(eq(legacyUsers.id, id))
       .returning();
     return user || undefined;
   }
 
   async deleteUser(id: number): Promise<boolean> {
-    const result = await db.delete(users).where(eq(users.id, id));
+    const result = await db.delete(legacyUsers).where(eq(legacyUsers.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await db.select().from(users);
+    return await db.select().from(legacyUsers);
   }
 
   // Stores

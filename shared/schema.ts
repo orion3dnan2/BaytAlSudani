@@ -145,7 +145,7 @@ export const announcementsRelations = relations(announcements, ({ one }) => ({
 }));
 
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).pick({
+export const insertUserSchema = createInsertSchema(legacyUsers).pick({
   username: true,
   password: true,
   email: true,
@@ -195,7 +195,7 @@ export const insertAnnouncementSchema = createInsertSchema(announcements).pick({
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export type User = typeof legacyUsers.$inferSelect;
 
 export type InsertStore = z.infer<typeof insertStoreSchema>;
 export type Store = typeof stores.$inferSelect;
