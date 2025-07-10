@@ -113,9 +113,7 @@ export default function Home() {
                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
                   البيت السوداني
                 </h1>
-                <p className="text-xl lg:text-2xl text-white/90">
-                  منصة التجارة الإلكترونية الأولى في السودان
-                </p>
+                <p className="text-xl lg:text-2xl text-white/90">سوداني وخليك .............. قدرها</p>
                 <p className="text-lg text-white/80 max-w-lg">
                   تسوق واكتشف أفضل المنتجات والخدمات من التجار السودانيين. تجربة تسوق آمنة وسهلة مع توصيل سريع لجميع أنحاء السودان.
                 </p>
