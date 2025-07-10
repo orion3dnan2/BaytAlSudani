@@ -146,7 +146,57 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.stores = [demoStore, demoRestaurant];
+    // Create additional demo stores
+    const demoElectronicsStore: Store = {
+      id: 3,
+      name: 'متجر الإلكترونيات العصرية',
+      description: 'متجر متخصص في أحدث الأجهزة الإلكترونية والهواتف الذكية',
+      ownerId: "2",
+      category: 'electronics',
+      address: 'الخرطوم - شارع البلدية',
+      phone: '0183456792',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoFashionStore: Store = {
+      id: 4,
+      name: 'بوتيك الأناقة السودانية',
+      description: 'أزياء سودانية حديثة وتقليدية للنساء والرجال',
+      ownerId: "2",
+      category: 'fashion',
+      address: 'الخرطوم - السوق العربي',
+      phone: '0183456793',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create additional restaurants
+    const demoCafe: Store = {
+      id: 5,
+      name: 'كافيه النيل الأزرق',
+      description: 'كافيه حديث يقدم أفضل المشروبات الساخنة والباردة مع إطلالة على النيل',
+      ownerId: "2",
+      category: 'restaurants-cafes',
+      address: 'الخرطوم - كورنيش النيل',
+      phone: '0183456794',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoFastFood: Store = {
+      id: 6,
+      name: 'مطعم البرجر السوداني',
+      description: 'مطعم وجبات سريعة يقدم البرجر والفرايز بالطعم السوداني الأصيل',
+      ownerId: "2",
+      category: 'restaurants-cafes',
+      address: 'الخرطوم - شارع الجامعة',
+      phone: '0183456795',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.stores = [demoStore, demoRestaurant, demoElectronicsStore, demoFashionStore, demoCafe, demoFastFood];
 
     // Create demo products
     const demoProduct: Product = {
@@ -172,7 +222,99 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.products = [demoProduct, demoMeal];
+    // Create demo products for electronics store
+    const demoPhone: Product = {
+      id: 3,
+      name: 'هاتف ذكي سامسونج جالاكسي',
+      description: 'هاتف ذكي حديث بمواصفات عالية وكاميرا ممتازة',
+      price: '1200',
+      storeId: 3,
+      category: 'الإلكترونيات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoLaptop: Product = {
+      id: 4,
+      name: 'لابتوب ديل للأعمال',
+      description: 'لابتوب عالي الأداء مناسب للعمل والدراسة',
+      price: '2500',
+      storeId: 3,
+      category: 'الإلكترونيات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo products for fashion store
+    const demoThobe: Product = {
+      id: 5,
+      name: 'جلابية سودانية رجالي',
+      description: 'جلابية سودانية تقليدية مصنوعة من القطن الخالص',
+      price: '180',
+      storeId: 4,
+      category: 'الأزياء والملابس',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoToub: Product = {
+      id: 6,
+      name: 'توب سوداني حريمي',
+      description: 'توب سوداني أصيل بألوان زاهية وتطريز يدوي',
+      price: '220',
+      storeId: 4,
+      category: 'الأزياء والملابس',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo cafe products
+    const demoCoffee: Product = {
+      id: 7,
+      name: 'قهوة سودانية أصيلة',
+      description: 'قهوة سودانية محمصة طازجة مع الحليب والهيل',
+      price: '15',
+      storeId: 5,
+      category: 'مطاعم وكافيهات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoJuice: Product = {
+      id: 8,
+      name: 'عصير المانجو الطازج',
+      description: 'عصير مانجو طبيعي 100% بدون إضافات صناعية',
+      price: '12',
+      storeId: 5,
+      category: 'مطاعم وكافيهات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo fast food products
+    const demoBurger: Product = {
+      id: 9,
+      name: 'برجر النيل الخاص',
+      description: 'برجر لحم طازج مع الخضار والصوص السوداني الخاص',
+      price: '25',
+      storeId: 6,
+      category: 'مطاعم وكافيهات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoFries: Product = {
+      id: 10,
+      name: 'بطاطس مقرمشة بالتوابل',
+      description: 'بطاطس مقلية مقرمشة متبلة بالتوابل السودانية',
+      price: '10',
+      storeId: 6,
+      category: 'مطاعم وكافيهات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.products = [demoProduct, demoMeal, demoPhone, demoLaptop, demoThobe, demoToub, demoCoffee, demoJuice, demoBurger, demoFries];
 
     // Create demo services
     const demoService: Service = {
@@ -186,7 +328,43 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.services = [demoService];
+    // Create demo services for electronics store
+    const demoRepairService: Service = {
+      id: 2,
+      name: 'صيانة الهواتف والأجهزة',
+      description: 'خدمة صيانة وإصلاح الهواتف الذكية والأجهزة الإلكترونية',
+      price: '50',
+      storeId: 3,
+      category: 'صيانة إلكترونيات',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo service for fashion store
+    const demoTailoringService: Service = {
+      id: 3,
+      name: 'خدمة تفصيل الملابس',
+      description: 'تفصيل الجلابيات والملابس السودانية حسب المقاس',
+      price: '100',
+      storeId: 4,
+      category: 'تفصيل ملابس',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo delivery service for restaurants
+    const demoDeliveryService: Service = {
+      id: 4,
+      name: 'خدمة التوصيل للمنازل',
+      description: 'توصيل الطعام والمشروبات لجميع أنحاء الخرطوم',
+      price: '5',
+      storeId: 5,
+      category: 'توصيل طعام',
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.services = [demoService, demoRepairService, demoTailoringService, demoDeliveryService];
 
     // Create demo jobs
     const demoJob: Job = {
@@ -200,7 +378,55 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.jobs = [demoJob];
+    // Create demo jobs for electronics store
+    const demoTechJob: Job = {
+      id: 2,
+      title: 'مطلوب فني صيانة إلكترونيات',
+      description: 'نبحث عن فني ماهر في صيانة الهواتف والأجهزة الإلكترونية',
+      salary: '1200',
+      location: 'الخرطوم',
+      storeId: 3,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo job for fashion store
+    const demoTailorJob: Job = {
+      id: 3,
+      title: 'مطلوب خياط محترف',
+      description: 'خياط ماهر في تفصيل الملابس السودانية التقليدية والحديثة',
+      salary: '1000',
+      location: 'الخرطوم',
+      storeId: 4,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo job for cafe
+    const demoBaristaJob: Job = {
+      id: 4,
+      title: 'مطلوب باريستا لكافيه النيل',
+      description: 'باريستا محترف لإعداد القهوة والمشروبات في بيئة عمل ممتازة',
+      salary: '800',
+      location: 'الخرطوم',
+      storeId: 5,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    // Create demo job for fast food
+    const demoChefJob: Job = {
+      id: 5,
+      title: 'مطلوب طباخ للوجبات السريعة',
+      description: 'طباخ ماهر في إعداد البرجر والوجبات السريعة',
+      salary: '900',
+      location: 'الخرطوم',
+      storeId: 6,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.jobs = [demoJob, demoTechJob, demoTailorJob, demoBaristaJob, demoChefJob];
 
     // Create demo announcements
     const demoAnnouncement: Announcement = {
@@ -212,7 +438,53 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
     };
 
-    this.announcements = [demoAnnouncement];
+    // Create demo announcements for different stores
+    const demoElectronicsAnnouncement: Announcement = {
+      id: 2,
+      title: 'عرض الجمعة البيضاء - خصم 50%',
+      content: 'خصم هائل على جميع الهواتف الذكية والأجهزة الإلكترونية لفترة محدودة',
+      storeId: 3,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoFashionAnnouncement: Announcement = {
+      id: 3,
+      title: 'مجموعة الصيف الجديدة',
+      content: 'وصلت مجموعة الصيف الجديدة من الأزياء السودانية العصرية والتقليدية',
+      storeId: 4,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoCafeAnnouncement: Announcement = {
+      id: 4,
+      title: 'افتتاح فرع جديد على النيل',
+      content: 'نعلن عن افتتاح فرعنا الجديد على كورنيش النيل مع إطلالة ساحرة',
+      storeId: 5,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoFastFoodAnnouncement: Announcement = {
+      id: 5,
+      title: 'وجبة البرجر المضاعفة',
+      content: 'جرب وجبة البرجر المضاعفة الجديدة بقطعتين من اللحم الطازج',
+      storeId: 6,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    const demoRestaurantAnnouncement: Announcement = {
+      id: 6,
+      title: 'أطباق رمضان الخاصة',
+      content: 'تشكيلة واسعة من الأطباق السودانية التقليدية خصيصاً لشهر رمضان المبارك',
+      storeId: 2,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.announcements = [demoAnnouncement, demoElectronicsAnnouncement, demoFashionAnnouncement, demoCafeAnnouncement, demoFastFoodAnnouncement, demoRestaurantAnnouncement];
 
     this.nextId = 4; // Start from 4 since we have 3 initial users
   }
