@@ -234,3 +234,11 @@ This architecture provides a solid foundation for a marketplace platform with ro
 - **Quick Access Repositioning**: Moved navigation options to top half of homepage as requested
 - **Merchant-Specific UI**: Added gradient styling and special sections for store owners
 - **Seamless Store Creation**: Direct pathways for merchants to create and manage stores
+
+### July 10, 2025 - Database Setup and Enhanced Store Categories
+- **Database Support**: Added comprehensive PostgreSQL database support with flexible fallback to in-memory storage
+- **Health Monitoring**: Added `/api/health` and `/api/db-status` endpoints for monitoring database connection
+- **Database Guide**: Created detailed `DATABASE_SETUP.md` with step-by-step instructions for multiple database providers
+- **Expanded Store Categories**: Added 16 comprehensive store categories including electronics, fashion, food, handicrafts, agriculture, and more
+- **Merchant Dashboard Fix**: Fixed merchant dashboard to show only user's own stores instead of all stores
+- **Data Persistence**: Application ready for PostgreSQL when DATABASE_URL is provided, with seamless migration from in-memory storage

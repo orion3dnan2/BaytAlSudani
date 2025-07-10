@@ -1,212 +1,126 @@
-# Database Setup Guide for البيت السوداني
+# Database Setup Guide
 
-## Overview
-Your البيت السوداني mobile marketplace is configured to work with both PostgreSQL (for production) and in-memory storage (for development). This guide will help you set up a PostgreSQL database.
+This guide will help you set up a PostgreSQL database for your Sudanese marketplace application.
 
-## Current Status
-- ✅ Mobile app is fully functional with in-memory storage
-- ✅ Database schema is defined and ready
-- ✅ Storage layer supports both PostgreSQL and in-memory fallback
-- ⏳ PostgreSQL database needs to be provisioned
+## Option 1: Replit Database (Recommended)
 
-## Database Setup Options
+1. **Go to the Replit Console**
+   - Click on the "Tools" tab in your Replit sidebar
+   - Select "Database" 
+   - Click "Create Database"
+   - Choose "PostgreSQL"
 
-### Option 1: Replit Database (Recommended)
-1. Go to your Replit project
-2. Click on "Database" in the sidebar
-3. Choose "PostgreSQL" 
-4. Click "Create Database"
-5. The `DATABASE_URL` environment variable will be automatically set
+2. **Get Connection Details**
+   - After creation, copy the `DATABASE_URL` provided
+   - It should look like: `postgresql://username:password@host:port/database`
 
-### Option 2: External PostgreSQL Provider
-You can use any PostgreSQL provider:
+3. **Set Environment Variable**
+   - Go to the "Secrets" tab in Replit
+   - Add a new secret with key: `DATABASE_URL`
+   - Paste the database URL as the value
 
-#### Popular Options:
+## Option 2: External PostgreSQL Service
+
+You can use services like:
 - **Neon**: https://neon.tech (Free tier available)
-- **Supabase**: https://supabase.com (Free tier available) 
-- **PlanetScale**: https://planetscale.com (Free tier available)
+- **Supabase**: https://supabase.com (Free tier available)
 - **ElephantSQL**: https://www.elephantsql.com (Free tier available)
+- **Railway**: https://railway.app (Free tier available)
 
-#### Setup Steps:
-1. Create an account with your chosen provider
+### Steps for External Service:
+1. Create an account on your chosen service
 2. Create a new PostgreSQL database
-3. Copy the connection string
-4. Add it to your Replit environment variables:
-   - Go to your Replit project
-   - Open the "Secrets" tab
-   - Add key: `DATABASE_URL`
-   - Add value: Your PostgreSQL connection string
+3. Copy the connection string (DATABASE_URL)
+4. Add it to Replit Secrets as `DATABASE_URL`
 
-### Option 3: Local PostgreSQL (Development)
+## Option 3: Local Development
+
 If running locally:
 ```bash
-# Install PostgreSQL
-brew install postgresql  # macOS
-sudo apt-get install postgresql postgresql-contrib  # Ubuntu
-
-# Start PostgreSQL
-brew services start postgresql  # macOS
-sudo service postgresql start  # Ubuntu
-
-# Create database
-createdb bait_sudani
+# Install PostgreSQL locally
+# Create a database
+createdb myapp_dev
 
 # Set environment variable
-export DATABASE_URL="postgresql://username:password@localhost:5432/bait_sudani"
+export DATABASE_URL="postgresql://username:password@localhost:5432/myapp_dev"
 ```
 
-## Database Schema Migration
+## After Setting Up Database
 
-Once you have set up your PostgreSQL database:
+Once you have the DATABASE_URL set:
 
-1. **Push the schema** (creates all tables):
+1. **Push Database Schema**
    ```bash
    npm run db:push
    ```
 
-2. **Verify the setup**:
-   ```bash
-   npm run dev
-   ```
-   
-   You should see: "DATABASE_URL found. Initializing PostgreSQL connection..."
+2. **Restart the Application**
+   - The app will automatically detect the DATABASE_URL
+   - It will switch from in-memory storage to PostgreSQL
+   - All your data will persist between restarts
 
 ## Database Schema
 
-Your database will include these tables:
+The application includes these tables:
+- `users` - User accounts and authentication
+- `stores` - Merchant stores
+- `products` - Product listings
+- `services` - Service offerings
+- `jobs` - Job postings
+- `announcements` - Store announcements
 
-### Users Table
-- `id` (Primary Key)
-- `username` (Unique)
-- `email` (Unique) 
-- `password_hash`
-- `full_name`
-- `phone`
-- `role` (admin, merchant, customer)
-- `is_active`
-- `created_at`
-- `updated_at`
+## Verification
 
-### Stores Table
-- `id` (Primary Key)
-- `name`
-- `description`
-- `owner_id` (Foreign Key → users.id)
-- `category`
-- `address`
-- `phone`
-- `is_active`
-- `created_at`
-- `updated_at`
+After setup, check the console logs. You should see:
+```
+DATABASE_URL found. Initializing PostgreSQL connection...
+```
 
-### Products Table
-- `id` (Primary Key)
-- `name`
-- `description`
-- `price`
-- `store_id` (Foreign Key → stores.id)
-- `category`
-- `is_active`
-- `created_at`
-- `updated_at`
-
-### Services Table
-- `id` (Primary Key)
-- `name`
-- `description`
-- `price`
-- `store_id` (Foreign Key → stores.id)
-- `category`
-- `is_active`
-- `created_at`
-- `updated_at`
-
-### Jobs Table
-- `id` (Primary Key)
-- `title`
-- `description`
-- `salary`
-- `location`
-- `store_id` (Foreign Key → stores.id)
-- `is_active`
-- `created_at`
-- `updated_at`
-
-### Announcements Table
-- `id` (Primary Key)
-- `title`
-- `content`
-- `store_id` (Foreign Key → stores.id)
-- `is_active`
-- `created_at`
-- `updated_at`
-
-## Features After Database Setup
-
-Once PostgreSQL is connected, you'll have:
-
-### Data Persistence
-- All user accounts, stores, and products will be permanently saved
-- Data survives app restarts and deployments
-- Real-time synchronization between mobile app and web dashboard
-
-### Advanced Features
-- User authentication with secure password hashing
-- Role-based access control (admin, merchant, customer)
-- Store ownership and management
-- Product catalog with categories and pricing
-- Search and filtering capabilities
-- Analytics and reporting data
-
-### Mobile App Integration
-- All mobile app features work seamlessly with the database
-- User profiles sync across devices
-- Store and product data is real-time
-- Authentication tokens are properly managed
-
-### PHP Web Dashboard
-- Admin panel with full database access
-- User management and store approval system
-- Analytics dashboard with real data
-- Content management for products and services
+Instead of:
+```
+DATABASE_URL not set. Database operations will use in-memory storage.
+```
 
 ## Troubleshooting
 
 ### Common Issues:
 
-1. **Connection Error**: Check that DATABASE_URL is correct and accessible
-2. **Schema Errors**: Run `npm run db:push` to ensure schema is up to date
-3. **Permission Errors**: Verify database user has proper permissions
-4. **SSL Issues**: Some providers require SSL connections
+1. **Connection Refused**
+   - Verify the DATABASE_URL is correct
+   - Check firewall settings
+   - Ensure database service is running
 
-### Debug Commands:
-```bash
-# Check if database is configured
-echo $DATABASE_URL
+2. **Authentication Failed**
+   - Double-check username and password
+   - Verify database exists
 
-# Test database connection
-npm run db:push
+3. **SSL Issues**
+   - Some services require SSL: add `?sslmode=require` to URL
+   - Example: `postgresql://user:pass@host:5432/db?sslmode=require`
 
-# View application logs
-npm run dev
-```
+### Getting Help
+
+If you encounter issues:
+1. Check the Replit console for error messages
+2. Verify the DATABASE_URL in secrets
+3. Try recreating the database connection
+
+## Data Migration
+
+The current in-memory data includes:
+- Demo admin, merchant, and customer accounts
+- Sample store (متجر الأحذية السودانية)
+- Sample products, services, jobs, and announcements
+
+After connecting to PostgreSQL, you can:
+1. Keep using the demo data for testing
+2. Create new stores and products through the UI
+3. Clear demo data and start fresh
 
 ## Next Steps
 
-1. **Choose a database provider** from the options above
-2. **Set up your database** and get the connection string
-3. **Add DATABASE_URL** to your environment variables
-4. **Run the migration** with `npm run db:push`
-5. **Test your app** to ensure everything works
-
-Your البيت السوداني mobile marketplace is ready to scale with a proper database backend!
-
-## Support
-
-If you need help with database setup:
-- Check provider documentation for connection strings
-- Verify network connectivity to your database
-- Review application logs for specific error messages
-- Test with a simple database query first
-
-Remember: Your app works perfectly with in-memory storage for development and testing, so you can continue building features while setting up the database.
+After database setup:
+1. Create your first store through the merchant dashboard
+2. Add products to your store
+3. Test the full merchant workflow
+4. Your data will now persist between application restarts!

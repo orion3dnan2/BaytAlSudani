@@ -3,69 +3,55 @@ import { db, pool } from '../db';
 
 const router = Router();
 
-// Health check endpoint
 router.get('/health', async (req, res) => {
   try {
     const status = {
-      status: 'ok',
+      status: 'healthy',
       timestamp: new Date().toISOString(),
-      services: {
-        database: 'unknown',
-        api: 'ok'
+      database: {
+        connected: !!db,
+        type: db ? 'postgresql' : 'in-memory'
       }
     };
 
-    // Check database connection
-    if (db && pool) {
-      try {
-        // Simple query to test database connection
-        await db.execute('SELECT 1');
-        status.services.database = 'connected';
-      } catch (error) {
-        status.services.database = 'error';
-        status.status = 'degraded';
-      }
-    } else {
-      status.services.database = 'not_configured';
-      status.status = 'degraded';
-    }
-
-    const httpStatus = status.status === 'ok' ? 200 : 503;
-    res.status(httpStatus).json(status);
+    res.json(status);
   } catch (error) {
     res.status(500).json({
-      status: 'error',
+      status: 'unhealthy',
       timestamp: new Date().toISOString(),
-      error: 'Health check failed'
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 });
 
-// Database status endpoint
 router.get('/db-status', async (req, res) => {
   try {
     if (!db || !pool) {
       return res.json({
-        connected: false,
-        message: 'Database not configured. Using in-memory storage.',
-        setup_guide: '/DATABASE_SETUP.md'
+        status: 'disconnected',
+        type: 'in-memory',
+        message: 'Using in-memory storage. Set DATABASE_URL to use PostgreSQL.',
+        timestamp: new Date().toISOString()
       });
     }
 
-    // Test database connection with a simple query
-    await db.execute('SELECT NOW()');
+    // Test database connection
+    const result = await pool.query('SELECT NOW()');
     
     res.json({
-      connected: true,
-      message: 'Database connection successful',
-      type: 'PostgreSQL'
+      status: 'connected',
+      type: 'postgresql',
+      message: 'PostgreSQL database connected successfully',
+      timestamp: new Date().toISOString(),
+      server_time: result.rows[0].now
     });
   } catch (error) {
     res.status(500).json({
-      connected: false,
+      status: 'error',
+      type: 'postgresql',
       message: 'Database connection failed',
-      error: error.message,
-      setup_guide: '/DATABASE_SETUP.md'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
     });
   }
 });
