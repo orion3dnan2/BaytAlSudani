@@ -80,11 +80,16 @@ export default function CreateStore() {
     setIsLoading(true);
     
     try {
-      const response = await apiRequest('/api/stores', {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch('/api/stores', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           ...data,
-          ownerId: user.id,
+          ownerId: user.id.toString(),
         }),
       });
 
@@ -112,7 +117,7 @@ export default function CreateStore() {
     }
   };
 
-  if (!user || (user.role !== 'store_owner' && user.role !== 'admin')) {
+  if (!user || (user.role !== 'store_owner' && user.role !== 'admin' && user.role !== 'merchant')) {
     return (
       <div className="container mx-auto py-8 px-4">
         <div className="max-w-2xl mx-auto">

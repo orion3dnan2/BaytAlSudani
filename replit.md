@@ -242,3 +242,11 @@ This architecture provides a solid foundation for a marketplace platform with ro
 - **Expanded Store Categories**: Added 16 comprehensive store categories including electronics, fashion, food, handicrafts, agriculture, and more
 - **Merchant Dashboard Fix**: Fixed merchant dashboard to show only user's own stores instead of all stores
 - **Data Persistence**: Application ready for PostgreSQL when DATABASE_URL is provided, with seamless migration from in-memory storage
+
+### July 10, 2025 - Separate Stores and Restaurants Navigation
+- **Navigation Enhancement**: Added separate "المتاجر" (Stores) and "المطاعم" (Restaurants) sections in main navigation
+- **Stores Page**: Created dedicated stores page filtering out restaurants, showing only general retail stores
+- **Restaurants Page**: Created specialized restaurants page with orange theme and restaurant-specific features
+- **Demo Data**: Added restaurant demo data including "مطعم الأصالة السودانية" with traditional Sudanese meals
+- **Authentication Fix**: Resolved store creation authentication issues for merchant users
+- **Icon Enhancement**: Added ChefHat icon for restaurants to distinguish from general stores
