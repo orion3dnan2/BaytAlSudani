@@ -24,7 +24,7 @@ export const authenticateToken = async (req: AuthenticatedRequest, res: Response
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: number; role: string };
-    const user = await storage.getUser(decoded.userId);
+    const user = await storage.getLegacyUser(decoded.userId);
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid token' });
@@ -53,7 +53,7 @@ export const requireAdmin = (req: AuthenticatedRequest, res: Response, next: Nex
 
 // Middleware to check if user has store owner role
 export const requireStoreOwner = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-  if (req.user?.role !== 'store_owner' && req.user?.role !== 'admin') {
+  if (req.user?.role !== 'merchant' && req.user?.role !== 'store_owner' && req.user?.role !== 'admin') {
     return res.status(403).json({ error: 'Store owner access required' });
   }
   next();

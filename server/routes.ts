@@ -36,13 +36,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/users/:id', authenticateToken, requireAdmin, async (req: AuthenticatedRequest, res) => {
     try {
       const id = parseInt(req.params.id);
-      const user = await storage.getUser(id);
+      const user = await storage.getLegacyUser(id);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
       res.json(user);
     } catch (error) {
       console.error('Get user error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  app.put('/api/users/:id', authenticateToken, async (req: AuthenticatedRequest, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { fullName, email, phone } = req.body;
+      
+      // Check if user can edit this profile (must be owner or admin)
+      if (req.user!.id !== id.toString() && req.user!.role !== 'admin') {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+      
+      const updatedUser = await storage.updateUser(id, { fullName, email, phone });
+      if (!updatedUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
+      res.json(updatedUser);
+    } catch (error) {
+      console.error('Update user error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   });
@@ -72,13 +94,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get('/api/stores/owner/:ownerId', async (req, res) => {
+    try {
+      const { ownerId } = req.params;
+      const stores = await storage.getStoresByOwner(ownerId);
+      res.json(stores);
+    } catch (error) {
+      console.error('Error fetching stores by owner:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   app.post('/api/stores', authenticateToken, requireStoreOwner, async (req: AuthenticatedRequest, res) => {
     try {
       const validatedData = insertStoreSchema.parse(req.body);
-      const store = await storage.createStore({
-        ...validatedData,
-        ownerId: req.user!.id,
-      });
+      const store = await storage.createStore(validatedData);
       res.status(201).json(store);
     } catch (error) {
       console.error('Create store error:', error);

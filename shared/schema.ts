@@ -40,7 +40,7 @@ export const users = pgTable("users", {
 });
 
 export type UpsertUser = typeof users.$inferInsert;
-export type User = typeof users.$inferSelect;
+export type ReplicaUser = typeof users.$inferSelect;
 
 // Legacy users table for existing system
 export const legacyUsers = pgTable("legacy_users", {

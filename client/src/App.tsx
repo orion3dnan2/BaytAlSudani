@@ -18,6 +18,9 @@ import Register from "@/pages/auth/register";
 import AdminDashboard from "@/pages/admin/dashboard";
 import StoreDetails from "@/pages/admin/store-details";
 import MerchantDashboard from "@/pages/merchant/dashboard";
+import Profile from "@/pages/profile";
+import CreateProduct from "@/pages/products/create";
+import CreateStore from "@/pages/stores/create";
 
 function App() {
   return (
@@ -59,9 +62,12 @@ function Router() {
       {/* Protected routes - only for authenticated users */}
       {isAuthenticated && (
         <>
+          <Route path="/profile" component={Profile} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/admin/stores/:id" component={StoreDetails} />
           <Route path="/merchant/dashboard" component={MerchantDashboard} />
+          <Route path="/products/create" component={CreateProduct} />
+          <Route path="/stores/create" component={CreateStore} />
         </>
       )}
       

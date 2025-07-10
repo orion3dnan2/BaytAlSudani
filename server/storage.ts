@@ -125,7 +125,7 @@ export class MemStorage implements IStorage {
       id: 1,
       name: 'متجر الأحذية السودانية',
       description: 'متجر متخصص في الأحذية التراثية والعصرية',
-      ownerId: 2,
+      ownerId: "2",
       category: 'أحذية ولباس',
       address: 'الخرطوم - شارع الجمهورية',
       phone: '0183456789',
@@ -201,19 +201,23 @@ export class MemStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
-    // For Replit Auth, upsert user data
-    const user: User = {
-      id: userData.id,
-      email: userData.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      profileImageUrl: userData.profileImageUrl,
-      role: userData.role || 'user',
-      createdAt: userData.createdAt || new Date(),
-      updatedAt: new Date(),
-    };
-    // In memory storage, we don't actually store Replit users
-    return user;
+    // For Replit Auth, upsert user data - but we redirect to legacy users
+    // Find or create a legacy user based on email
+    let legacyUser = await this.getUserByEmail(userData.email || '');
+    
+    if (!legacyUser) {
+      // Create new legacy user from Replit data
+      legacyUser = await this.createUser({
+        username: userData.email?.split('@')[0] || 'user',
+        password: 'replit_user', // Default password for Replit users
+        email: userData.email || '',
+        fullName: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || 'مستخدم',
+        phone: null,
+        role: userData.role || 'customer',
+      });
+    }
+    
+    return legacyUser;
   }
 
   // Legacy user operations
@@ -237,7 +241,7 @@ export class MemStorage implements IStorage {
       email: insertUser.email,
       fullName: insertUser.fullName,
       phone: insertUser.phone ?? null,
-      role: insertUser.role ?? 'customer',
+      role: insertUser.role ?? 'merchant',
       isActive: true,
       createdAt: new Date(),
     };
