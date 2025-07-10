@@ -32,7 +32,7 @@ export default function Navigation() {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   const navItems = [
     { href: '/', label: 'الرئيسية', icon: Home },
@@ -186,30 +186,32 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center justify-center space-x-8 space-x-reverse py-2 border-t border-gray-100">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-lg transition-all ${
-                  isActive
-                    ? 'bg-sudan-blue text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-100 hover:text-sudan-blue'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
-        </div>
+        {/* Desktop Navigation Links - Only show when authenticated */}
+        {isAuthenticated && (
+          <div className="hidden md:flex items-center justify-center space-x-8 space-x-reverse py-2 border-t border-gray-100">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center space-x-2 space-x-reverse px-3 py-2 rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-sudan-blue text-white shadow-md'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-sudan-blue'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </div>
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
+      {/* Mobile Navigation Menu - Only show when authenticated */}
+      {isMenuOpen && isAuthenticated && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col space-y-2">
