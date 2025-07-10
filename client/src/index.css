@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -90,7 +90,7 @@
 
   body {
     @apply font-arabic antialiased bg-background text-foreground;
-    font-family: 'Noto Sans Arabic', Arial, sans-serif;
+    font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
   }
   
   html {
@@ -100,7 +100,7 @@
 
 @layer utilities {
   .font-arabic {
-    font-family: 'Noto Sans Arabic', Arial, sans-serif;
+    font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
   }
   
   .animate-fade-in {
