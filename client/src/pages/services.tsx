@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import serviceBgImage from "@assets/image_1752142698818.png";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,8 +84,25 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-sudan-heritage text-white py-16">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden bg-gradient-sudan-heritage text-white py-16">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#871414]/70 via-[#871414]/60 to-[#871414]/80"></div>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+            style={{
+              backgroundImage: `url("${serviceBgImage}")`,
+              backgroundPosition: "center center"
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#871414]/50 via-transparent to-[#871414]/50"></div>
+        </div>
+        
+        {/* Geometric Pattern Overlay */}
+        <div className="absolute inset-0 pattern-sudanese-geometric opacity-5"></div>
+        
+        {/* Content */}
+        <div className="relative container mx-auto px-4 z-10">
           <div className="text-center mb-8">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">الخدمات المهنية</h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">

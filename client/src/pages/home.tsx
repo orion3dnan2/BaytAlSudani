@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import sudaneseRiverImage from "@assets/IMG_20140225_115710_1752142479490.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -106,9 +107,9 @@ export default function Home() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-[#871414] from-0% via-[#871414]/90 via-45% to-transparent to-70%"></div>
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
             style={{
-              backgroundImage: "url('/IMG_20140225_115710_1752141643086.jpg')",
+              backgroundImage: `url("${sudaneseRiverImage}")`,
               backgroundPosition: "center right",
               maskImage: "linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,1) 100%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, transparent 30%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,1) 100%)"
