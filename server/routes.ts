@@ -9,6 +9,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
   app.use('/api/auth', authRoutes);
 
+  // Test route to debug user data
+  app.get('/api/test-users', async (req, res) => {
+    try {
+      const users = await storage.getAllUsers();
+      res.json(users.map(u => ({ id: u.id, username: u.username, email: u.email, role: u.role })));
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   // Users routes (Admin only)
   app.get('/api/users', authenticateToken, requireAdmin, async (req: AuthenticatedRequest, res) => {
     try {
