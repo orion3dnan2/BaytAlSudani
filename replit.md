@@ -136,6 +136,16 @@ This architecture provides a solid foundation for a marketplace platform with ro
 
 ## Recent Changes
 
+### July 11, 2025 - Mobile App Enhancement with Country Selection
+- **Country Selection Screen**: Added initial country selection screen supporting 8 Arab countries (Sudan, Egypt, Saudi Arabia, UAE, Qatar, Bahrain, Oman, Kuwait)
+- **Enhanced Mobile Navigation**: Redesigned bottom navigation to include Services, Jobs, and Announcements tabs
+- **New Mobile Screens**: Created dedicated screens for Services, Jobs, and Announcements with Arabic interface
+- **API Integration**: Enhanced API service with complete endpoints for services, jobs, and announcements
+- **Navigation Flow**: Implemented country selection → login → main app flow with proper session management
+- **Arabic UI**: All mobile screens fully support Arabic RTL layout with Sudanese cultural design elements
+- **Data Integration**: Mobile app now fetches real data from existing backend API endpoints
+- **Admin Dashboard Access**: Maintained separate admin dashboard access at `/admin/dashboard` (admin/admin credentials)
+
 ### July 10, 2025
 - **Migration Completed**: Successfully migrated from Replit Agent to standard Replit environment
 - **Authentication Fixed**: Resolved login API call issues in React components by correcting `apiRequest` function usage
