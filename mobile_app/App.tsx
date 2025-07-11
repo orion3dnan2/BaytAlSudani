@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // Import screens
+import CountrySelectionScreen from './src/screens/CountrySelectionScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import UserProfileScreen from './src/screens/UserProfileScreen';
@@ -15,6 +16,9 @@ import CreateProductScreen from './src/screens/CreateProductScreen';
 import CreateStoreScreen from './src/screens/CreateStoreScreen';
 import MarketplaceScreen from './src/screens/MarketplaceScreen';
 import StoreDetailsScreen from './src/screens/StoreDetailsScreen';
+import ServicesScreen from './src/screens/ServicesScreen';
+import JobsScreen from './src/screens/JobsScreen';
+import AnnouncementsScreen from './src/screens/AnnouncementsScreen';
 
 // Import context
 import { AuthProvider, useAuth } from './src/context/AuthContext';
@@ -38,10 +42,14 @@ function MainTabs() {
             iconName = 'home';
           } else if (route.name === 'Marketplace') {
             iconName = 'store';
+          } else if (route.name === 'Services') {
+            iconName = 'miscellaneous-services';
+          } else if (route.name === 'Jobs') {
+            iconName = 'work';
+          } else if (route.name === 'Announcements') {
+            iconName = 'announcement';
           } else if (route.name === 'Profile') {
             iconName = 'person';
-          } else if (route.name === 'CreateStore') {
-            iconName = 'add-business';
           }
           
           return <Icon name={iconName} size={size} color={color} />;
@@ -65,12 +73,22 @@ function MainTabs() {
       <Tab.Screen 
         name="Marketplace" 
         component={MarketplaceScreen} 
-        options={{ title: 'السوق' }}
+        options={{ title: 'المتاجر' }}
       />
       <Tab.Screen 
-        name="CreateStore" 
-        component={CreateStoreScreen} 
-        options={{ title: 'إنشاء متجر' }}
+        name="Services" 
+        component={ServicesScreen} 
+        options={{ title: 'الخدمات' }}
+      />
+      <Tab.Screen 
+        name="Jobs" 
+        component={JobsScreen} 
+        options={{ title: 'الوظائف' }}
+      />
+      <Tab.Screen 
+        name="Announcements" 
+        component={AnnouncementsScreen} 
+        options={{ title: 'الإعلانات' }}
       />
       <Tab.Screen 
         name="Profile" 
@@ -83,11 +101,31 @@ function MainTabs() {
 
 function AppNavigator() {
   const { isAuthenticated } = useAuth();
+  const [countrySelected, setCountrySelected] = useState(false);
+  
+  useEffect(() => {
+    checkCountrySelection();
+  }, []);
+  
+  const checkCountrySelection = async () => {
+    try {
+      const selectedCountry = await AsyncStorage.getItem('selectedCountry');
+      setCountrySelected(!!selectedCountry);
+    } catch (error) {
+      console.error('Error checking country selection:', error);
+    }
+  };
   
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!isAuthenticated ? (
+        {!countrySelected ? (
+          <Stack.Screen 
+            name="CountrySelection" 
+            component={CountrySelectionScreen} 
+            options={{ headerShown: false }}
+          />
+        ) : !isAuthenticated ? (
           <Stack.Screen 
             name="Login" 
             component={LoginScreen} 
@@ -105,6 +143,15 @@ function AppNavigator() {
               component={CreateProductScreen} 
               options={{ 
                 title: 'إضافة منتج جديد',
+                headerStyle: { backgroundColor: theme.colors.primary },
+                headerTintColor: '#fff'
+              }}
+            />
+            <Stack.Screen 
+              name="CreateStore" 
+              component={CreateStoreScreen} 
+              options={{ 
+                title: 'إنشاء متجر جديد',
                 headerStyle: { backgroundColor: theme.colors.primary },
                 headerTintColor: '#fff'
               }}
