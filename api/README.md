@@ -1,259 +1,109 @@
-# Bayt AlSudani API
+# البيت السوداني - Sudanese Marketplace Platform
 
-## Overview
-This is a comprehensive RESTful API for the Bayt AlSudani (Sudanese Marketplace) platform built with Python Flask and MySQL.
+## هيكل المشروع / Project Structure
 
-## Features
-- User Authentication (Login/Register)
-- Store Management
-- Product Management
-- Service Management
-- Job Listings
-- Announcements
-- JWT Token Authentication
-- API Token Security
-- CORS Support
+يتكون هذا المشروع من ثلاثة أجزاء رئيسية:
 
-## Installation
+### 1. مجلد `admin/` - لوحة التحكم الإدارية
+**الغرض**: لوحة تحكم مبنية بـ PHP لإدارة المستخدمين والنظام
+**المحتويات**:
+- `dashboard.php` - الصفحة الرئيسية للإحصائيات والمعلومات
+- `login_admin.php` - صفحة تسجيل الدخول للمديرين
+- `manage_users.php` - إدارة المستخدمين (تفعيل، إلغاء تفعيل، تغيير الأدوار)
+- `logout.php` - تسجيل الخروج
 
-1. Install Python dependencies:
+**الحماية**: محمية بجلسات PHP، فقط المديرون يمكنهم الوصول
+
+### 2. مجلد `api/` - واجهة برمجة التطبيقات
+**الغرض**: API endpoints تعود بـ JSON فقط للتطبيق المحمول
+**المحتويات**:
+- `config/` - إعدادات قاعدة البيانات والـ CORS
+- `auth/` - تسجيل الدخول والخروج
+- `stores/` - إدارة المتاجر
+- `products/` - إدارة المنتجات
+- `services/` - إدارة الخدمات
+- `jobs/` - إدارة الوظائف
+- `announcements/` - إدارة الإعلانات
+
+**المميزات**:
+- كل ملف يبدأ بـ `header("Content-Type: application/json");`
+- دعم CORS للتطبيقات المحمولة
+- معالجة أخطاء شاملة
+
+### 3. مجلد `mobile_app/` - تطبيقات الهاتف المحمول
+**الغرض**: تطبيقات الهاتف المحمول والويب
+**المحتويات**:
+- `web/` - تطبيق الويب المبني بـ React
+- ملفات React Native للتطبيق المحمول
+- `package.json` - تبعيات التطبيق المحمول
+
+## قاعدة البيانات
+- **النوع**: PostgreSQL
+- **الجداول**: المستخدمين، المتاجر، المنتجات، الخدمات، الوظائف، الإعلانات
+- **الاتصال**: عبر متغيرات البيئة في `api/config/database.php`
+
+## بيانات الاختبار / Test Credentials
+- **مدير**: `admin` / `admin`
+- **تاجر**: `merchant1` / `admin`
+- **عميل**: `customer1` / `admin`
+
+## التشغيل / Setup
+
+### لتشغيل التطبيق المحمول:
 ```bash
-pip install flask flask-cors pymysql python-dotenv sqlalchemy bcrypt pyjwt
+cd mobile_app
+npm install
+npm run dev
 ```
 
-2. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
+### لتشغيل لوحة التحكم:
+1. تأكد من تشغيل خادم PHP
+2. اذهب إلى `admin/login_admin.php`
+3. ادخل بيانات المدير
 
-3. Configure your MySQL database:
-```sql
-CREATE DATABASE sudanese_marketplace;
-```
+### لاستخدام API:
+- جميع endpoints تبدأ بـ `/api/`
+- مثال: `GET /api/stores/list.php`
+- إرسال البيانات بصيغة JSON
 
-## Environment Variables
+## الأمان / Security
+- **جلسات PHP**: حماية لوحة التحكم
+- **تشفير كلمات المرور**: باستخدام PHP password_hash()
+- **CORS**: مُعد للتطبيقات المحمولة
+- **فصل الأدوار**: مدير، تاجر، عميل
 
-Required environment variables in `.env`:
+## الملفات المنقولة / Migrated Files
+- `server/` - تم نقل منطق الخادم إلى `api/`
+- `client/` - تم نقل ملفات React إلى `mobile_app/web/`
+- `mobile/` - تم نقل ملفات React Native إلى `mobile_app/`
+- `shared/` - تم الاحتفاظ بها للمخططات المشتركة
 
-```
-DB_HOST=localhost
-DB_NAME=sudanese_marketplace
-DB_USER=root
-DB_PASS=your_password
-JWT_SECRET=your-jwt-secret-key
-API_PORT=5000
-DEBUG=true
-```
+## التطوير / Development
+- **API PHP**: يعمل مع أي خادم PHP
+- **React Web**: يعمل مع Vite
+- **React Native**: يعمل مع Expo
+- **قاعدة البيانات**: PostgreSQL أو SQLite للتطوير
 
-## API Endpoints
+---
 
-### Authentication
-- `POST /api/login` - User login
-- `POST /api/register` - User registration
+## English
 
-### Stores
-- `GET /api/stores` - Get all stores
-- `GET /api/stores/<id>` - Get store by ID
-- `POST /api/stores` - Create new store
+### Project Structure
+This project consists of three main parts:
 
-### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/<id>` - Get product by ID
-- `POST /api/products` - Create new product
+1. **admin/** - PHP-based admin dashboard for system management
+2. **api/** - PHP REST API endpoints that return JSON only
+3. **mobile_app/** - Mobile and web applications (React Native + React)
 
-### Services
-- `GET /api/services` - Get all services
-- `POST /api/services` - Create new service
+### Features
+- Multi-platform support (Web, iOS, Android)
+- Role-based access control (Admin, Merchant, Customer)
+- RESTful API architecture
+- Arabic RTL interface
+- Secure authentication and session management
 
-### Jobs
-- `GET /api/jobs` - Get all jobs
-- `POST /api/jobs` - Create new job
-
-### Announcements
-- `GET /api/announcements` - Get all announcements
-- `POST /api/announcements` - Create new announcement
-
-## Security
-
-All API endpoints (except login) require authentication via JWT token:
-```
-Authorization: Bearer <jwt-token>
-```
-
-The JWT token is obtained by calling the `/api/login` endpoint with valid credentials. The token contains user information and expires after 24 hours.
-
-## Running Individual Endpoints
-
-Each endpoint can be run independently:
-
-```bash
-# Login service
-python api/login.py
-
-# Register service
-python api/register.py
-
-# Store services
-python api/create_store.py
-python api/get_stores.py
-python api/get_store_by_id.py
-
-# Product services
-python api/create_product.py
-python api/get_products.py
-python api/get_product_by_id.py
-
-# Service management
-python api/create_service.py
-python api/get_services.py
-
-# Job management
-python api/create_job.py
-python api/get_jobs.py
-
-# Announcement management
-python api/create_announcement.py
-python api/get_announcements.py
-```
-
-## Running Main Server
-
-To run all endpoints from a single server:
-
-```bash
-python api/main_server.py
-```
-
-## Testing
-
-Run the test suite:
-
-```bash
-python api/test_api.py
-```
-
-## Database Schema
-
-The API expects the following MySQL tables:
-
-### Users Table
-```sql
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    fullName VARCHAR(255) NOT NULL,
-    phone VARCHAR(20),
-    role ENUM('admin', 'merchant', 'customer') DEFAULT 'customer',
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### Stores Table
-```sql
-CREATE TABLE stores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    ownerId INT NOT NULL,
-    category VARCHAR(100),
-    address TEXT,
-    phone VARCHAR(20),
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ownerId) REFERENCES users(id)
-);
-```
-
-### Products Table
-```sql
-CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    storeId INT NOT NULL,
-    category VARCHAR(100),
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (storeId) REFERENCES stores(id)
-);
-```
-
-### Services Table
-```sql
-CREATE TABLE services (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    storeId INT NOT NULL,
-    category VARCHAR(100),
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (storeId) REFERENCES stores(id)
-);
-```
-
-### Jobs Table
-```sql
-CREATE TABLE jobs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    salary DECIMAL(10,2),
-    location VARCHAR(255),
-    storeId INT NOT NULL,
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (storeId) REFERENCES stores(id)
-);
-```
-
-### Announcements Table
-```sql
-CREATE TABLE announcements (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    content TEXT,
-    storeId INT NOT NULL,
-    isActive BOOLEAN DEFAULT TRUE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (storeId) REFERENCES stores(id)
-);
-```
-
-## Response Format
-
-All API responses follow this format:
-
-```json
-{
-  "status": "success|error",
-  "message": "Description of the result",
-  "data": {}, // Optional data payload
-  "count": 0  // Optional count for list endpoints
-}
-```
-
-## Error Handling
-
-The API returns appropriate HTTP status codes:
-
-- `200` - Success
-- `400` - Bad Request (missing/invalid parameters)
-- `401` - Unauthorized (invalid/missing API token)
-- `404` - Not Found (resource doesn't exist)
-- `409` - Conflict (duplicate resource)
-- `500` - Internal Server Error
-
-## Contributing
-
-1. Follow the existing code structure
-2. Add proper error handling
-3. Include authentication checks
-4. Test all endpoints before deployment
-5. Update documentation for new endpoints
+### Technology Stack
+- **Backend**: PHP + PostgreSQL
+- **Frontend**: React (Web) + React Native (Mobile)
+- **Database**: PostgreSQL with fallback to SQLite
+- **Authentication**: PHP Sessions + JWT tokens

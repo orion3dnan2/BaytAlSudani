@@ -1,7 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import sys
 from dotenv import load_dotenv
+
+# Add current directory to Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from db_config import init_database
 
 # Import all API endpoint functions

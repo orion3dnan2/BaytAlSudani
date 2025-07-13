@@ -1,0 +1,50 @@
+I’m building a professional marketplace application called "Bayt AlSudani" that includes:
+
+- A mobile app for public users (browsing, purchasing, and exploring stores)
+- A web-based dashboard system for Admins and Store Owners
+
+Please do the following:
+
+🔧 Backend Setup:
+- Create a clean and scalable **RESTful API** using Node.js + TypeScript + Express
+- Use **PostgreSQL** as the database
+- Setup `drizzle-orm` or any stable ORM for schema and queries
+- Create a `.env` config for DB connection and JWT secret
+- Organize code with folders: `/routes`, `/controllers`, `/models`, `/middleware`, `/utils`
+
+🔐 Authentication:
+- Implement JWT-based auth
+- Support 3 user roles: **Admin**, **StoreOwner**, and **Customer**
+- Each role must access only allowed endpoints
+- Include login/register routes and session handling
+
+📡 API Endpoints (initial):
+- `/api/auth/login` - login by email/password
+- `/api/auth/register` - for store owners/customers
+- `/api/users/:id` - get user info
+- `/api/stores` - create, update, list stores
+- `/api/products` - list/add/update/delete products (only for store owner)
+- `/api/orders` - list and manage orders
+
+🌐 Web Admin Panel:
+- Build the admin and store owner dashboard inside the web project
+- Pages: `/admin`, `/dashboard/store`, `/dashboard/profile`
+- Each dashboard section should fetch its data directly via the created API
+
+🔁 Link the API:
+- All dashboard pages must use live data from the API (do not use mock data)
+- Use `fetch()` or `axios` to get real-time updates and actions (CRUD)
+- Implement secure access: only logged-in users with proper role can access dashboards
+
+🎨 Design:
+- Use Tailwind CSS for styling
+- Make sure the layout is responsive and clean
+- Separate layout components: header, sidebar, footer
+
+🧪 After building:
+- Confirm API is working using Postman
+- Confirm dashboard pages pull actual data
+- Make the project ready for future integration with the mobile app frontend
+
+Let me know when all APIs are ready and integrated with the web dashboards.
+Then I’ll proceed to connect the mobile app (Flutter or React Native) with these APIs.

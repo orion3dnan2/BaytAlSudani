@@ -1,0 +1,54 @@
+🎯 Task:
+Improve the Frontend (React + TailwindCSS) of the "Bayt AlSudani" project to address UI/UX issues and missing user interactions.
+
+📁 Project Stack:
+- React + TypeScript
+- TailwindCSS
+- Pages already include: Home, Marketplace, Stores, Services, Jobs, Announcements, Profile, Dashboard
+- Design should be mobile-first (PWA)
+
+✅ Goals:
+
+1. ➕ Add CTA (Call To Action) Buttons:
+   - On each section (products, stores, services, jobs, announcements), add a clearly visible “Add New” button for merchants/admins only.
+   - Example: `+ Add Product`, `+ Add Store`, etc.
+   - Place button top-right of the list/grid
+
+2. 👤 Profile Page Enhancements:
+   - Redesign user profile to include:
+     - Full name, email, role
+     - User image/avatar
+     - Joined date
+     - Editable fields (name, password, etc.)
+     - "Edit Profile" button
+   - Add section to list user’s own stores, products, or services
+
+3. 🏬 Store Details Page:
+   - Include list of products/services related to the store
+   - Add merchant contact info (phone, email if available)
+   - Option to “Request Service” or “Contact Seller”
+
+4. ⭐ Product/Service UI Cards:
+   - Include:
+     - Image
+     - Title
+     - Price
+     - Short description
+     - Merchant/store name
+     - Button: View / Order
+   - Make cards responsive and visually appealing
+
+5. 📱 Navigation Improvements:
+   - Add bottom tab navigation for mobile view:
+     - Home | Marketplace | Services | Jobs | Profile
+   - Make navigation sticky/fixed on mobile
+
+6. 💬 Empty States:
+   - If no products/stores/services exist, show a nice empty message with a CTA (e.g. “No services yet. Add your first one.”)
+
+7. 🛠️ Optional:
+   - Add “Filter” and “Search” inputs on top of each listing (products, stores, services)
+   - Example: filter by category, price range
+
+📌 Final Goal:
+Deliver a modern, clean, mobile-optimized UI across all pages using TailwindCSS, with clearly separated user roles (customer vs merchant vs admin), and intuitive interactions for managing content.
