@@ -2,15 +2,18 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import bcrypt
 import pymysql
-from db_config import get_db_connection, verify_token
+from db_config import get_db_connection
+from auth_utils import require_jwt_auth
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    if not verify_token(request):
-        return jsonify({"status": "error", "message": "Unauthorized"}), 401
+    # JWT authentication check
+    payload, error_response = require_jwt_auth(request)
+    if error_response:
+        return error_response
     
     data = request.get_json()
     required_fields = ['username', 'password', 'email', 'fullName']

@@ -1,19 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import bcrypt
-import jwt
-import os
-from datetime import datetime, timedelta
-from db_config import get_db_connection, verify_token
+from db_config import get_db_connection
+from auth_utils import encode_jwt
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    if not verify_token(request):
-        return jsonify({"status": "error", "message": "Unauthorized"}), 401
-    
     data = request.get_json()
     if not data or not data.get('username') or not data.get('password'):
         return jsonify({"status": "error", "message": "Username and password required"}), 400
@@ -33,9 +28,9 @@ def login():
                 'user_id': user['id'],
                 'username': user['username'],
                 'role': user['role'],
-                'exp': datetime.utcnow() + timedelta(hours=24)
+                'fullName': user['fullName']
             }
-            token = jwt.encode(payload, os.getenv('JWT_SECRET', 'your-secret-key'), algorithm='HS256')
+            token = encode_jwt(payload)
             
             return jsonify({
                 "status": "success",

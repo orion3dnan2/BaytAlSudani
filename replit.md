@@ -136,6 +136,18 @@ This architecture provides a solid foundation for a marketplace platform with ro
 
 ## Recent Changes
 
+### July 13, 2025 - JWT Authentication System Upgrade
+- **JWT Implementation**: Completely upgraded authentication system from API tokens to JWT-based authentication
+- **Security Enhancement**: Implemented proper JWT token generation and verification using PyJWT with HS256 algorithm
+- **Auth Utils Module**: Created comprehensive `auth_utils.py` with encode_jwt(), decode_jwt(), and require_jwt_auth() functions
+- **Login System**: Updated login endpoint to generate JWT tokens containing user information with 24-hour expiration
+- **Protected Endpoints**: All API endpoints now require valid JWT tokens in Authorization header (Bearer format)
+- **Token Validation**: Proper JWT token validation with expiration checks and error handling
+- **Test Suite Update**: Updated test script to work with JWT authentication flow (login -> get token -> authenticate requests)
+- **Documentation**: Updated API documentation to reflect JWT authentication requirements
+- **Environment Config**: Simplified environment variables by removing API_TOKEN in favor of JWT_SECRET
+- **Production Security**: Enhanced security with proper token-based authentication suitable for production use
+
 ### July 13, 2025 - PostgreSQL Database Integration
 - **Database Configuration**: Successfully configured PostgreSQL database for the Bayt AlSudani marketplace platform
 - **Schema Migration**: Applied complete database schema using Drizzle ORM with `npm run db:push`

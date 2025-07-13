@@ -20,15 +20,5 @@ def get_db_connection():
         print(f"Database connection error: {e}")
         return None
 
-def verify_token(request):
-    """Verify API token from request headers"""
-    auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        return False
-    
-    try:
-        token = auth_header.split(' ')[1]  # Bearer <token>
-        expected_token = os.getenv('API_TOKEN', 'your-secret-api-token')
-        return token == expected_token
-    except IndexError:
-        return False
+# JWT authentication is now handled by auth_utils.py
+# This function has been removed in favor of JWT-based authentication

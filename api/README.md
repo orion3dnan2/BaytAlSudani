@@ -41,7 +41,6 @@ DB_HOST=localhost
 DB_NAME=sudanese_marketplace
 DB_USER=root
 DB_PASS=your_password
-API_TOKEN=your-secret-api-token
 JWT_SECRET=your-jwt-secret-key
 API_PORT=5000
 DEBUG=true
@@ -77,10 +76,12 @@ DEBUG=true
 
 ## Security
 
-All API endpoints require authentication via API token:
+All API endpoints (except login) require authentication via JWT token:
 ```
-Authorization: Bearer your-secret-api-token
+Authorization: Bearer <jwt-token>
 ```
+
+The JWT token is obtained by calling the `/api/login` endpoint with valid credentials. The token contains user information and expires after 24 hours.
 
 ## Running Individual Endpoints
 
