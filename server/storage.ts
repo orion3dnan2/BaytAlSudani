@@ -3,9 +3,7 @@ import { eq } from "drizzle-orm";
 
 // Database imports for DatabaseStorage class
 import bcrypt from "bcryptjs";
-
-// Database connection - will be initialized later if needed
-let db: any;
+import { db } from "./db";
 
 export interface IStorage {
   // User operations
@@ -836,16 +834,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
+    this.checkDbConnection();
     const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.username, username));
     return user || undefined;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
+    this.checkDbConnection();
     const [user] = await db.select().from(legacyUsers).where(eq(legacyUsers.email, email));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
+    this.checkDbConnection();
     const [user] = await db
       .insert(legacyUsers)
       .values(insertUser)
@@ -854,6 +855,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined> {
+    this.checkDbConnection();
     const [user] = await db
       .update(legacyUsers)
       .set(userData)
@@ -863,33 +865,40 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteUser(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(legacyUsers).where(eq(legacyUsers.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   async getAllUsers(): Promise<User[]> {
+    this.checkDbConnection();
     return await db.select().from(legacyUsers);
   }
 
   // Stores
   async getStore(id: number): Promise<Store | undefined> {
+    this.checkDbConnection();
     const [store] = await db.select().from(stores).where(eq(stores.id, id));
     return store || undefined;
   }
 
   async getStoresByOwner(ownerId: string): Promise<Store[]> {
+    this.checkDbConnection();
     return await db.select().from(stores).where(eq(stores.ownerId, ownerId));
   }
 
   async getStoresByCategory(category: string): Promise<Store[]> {
+    this.checkDbConnection();
     return await db.select().from(stores).where(eq(stores.category, category));
   }
 
   async getAllStores(): Promise<Store[]> {
+    this.checkDbConnection();
     return await db.select().from(stores);
   }
 
   async createStore(insertStore: InsertStore): Promise<Store> {
+    this.checkDbConnection();
     const [store] = await db
       .insert(stores)
       .values(insertStore)
@@ -898,6 +907,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateStore(id: number, storeData: Partial<InsertStore>): Promise<Store | undefined> {
+    this.checkDbConnection();
     const [store] = await db
       .update(stores)
       .set(storeData)
@@ -907,29 +917,35 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteStore(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(stores).where(eq(stores.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   // Products
   async getProduct(id: number): Promise<Product | undefined> {
+    this.checkDbConnection();
     const [product] = await db.select().from(products).where(eq(products.id, id));
     return product || undefined;
   }
 
   async getProductsByStore(storeId: number): Promise<Product[]> {
+    this.checkDbConnection();
     return await db.select().from(products).where(eq(products.storeId, storeId));
   }
 
   async getProductsByCategory(category: string): Promise<Product[]> {
+    this.checkDbConnection();
     return await db.select().from(products).where(eq(products.category, category));
   }
 
   async getAllProducts(): Promise<Product[]> {
+    this.checkDbConnection();
     return await db.select().from(products);
   }
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    this.checkDbConnection();
     const [product] = await db
       .insert(products)
       .values(insertProduct)
@@ -938,6 +954,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateProduct(id: number, productData: Partial<InsertProduct>): Promise<Product | undefined> {
+    this.checkDbConnection();
     const [product] = await db
       .update(products)
       .set(productData)
@@ -947,25 +964,30 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteProduct(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(products).where(eq(products.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   // Services
   async getService(id: number): Promise<Service | undefined> {
+    this.checkDbConnection();
     const [service] = await db.select().from(services).where(eq(services.id, id));
     return service || undefined;
   }
 
   async getServicesByStore(storeId: number): Promise<Service[]> {
+    this.checkDbConnection();
     return await db.select().from(services).where(eq(services.storeId, storeId));
   }
 
   async getServicesByCategory(category: string): Promise<Service[]> {
+    this.checkDbConnection();
     return await db.select().from(services).where(eq(services.category, category));
   }
 
   async getAllServices(): Promise<Service[]> {
+    this.checkDbConnection();
     return await db.select().from(services);
   }
 
@@ -987,21 +1009,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteService(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(services).where(eq(services.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   // Jobs
   async getJob(id: number): Promise<Job | undefined> {
+    this.checkDbConnection();
     const [job] = await db.select().from(jobs).where(eq(jobs.id, id));
     return job || undefined;
   }
 
   async getJobsByStore(storeId: number): Promise<Job[]> {
+    this.checkDbConnection();
     return await db.select().from(jobs).where(eq(jobs.storeId, storeId));
   }
 
   async getAllJobs(): Promise<Job[]> {
+    this.checkDbConnection();
     return await db.select().from(jobs).where(eq(jobs.isActive, true));
   }
 
@@ -1023,21 +1049,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteJob(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(jobs).where(eq(jobs.id, id));
     return (result.rowCount || 0) > 0;
   }
 
   // Announcements
   async getAnnouncement(id: number): Promise<Announcement | undefined> {
+    this.checkDbConnection();
     const [announcement] = await db.select().from(announcements).where(eq(announcements.id, id));
     return announcement || undefined;
   }
 
   async getAnnouncementsByStore(storeId: number): Promise<Announcement[]> {
+    this.checkDbConnection();
     return await db.select().from(announcements).where(eq(announcements.storeId, storeId));
   }
 
   async getAllAnnouncements(): Promise<Announcement[]> {
+    this.checkDbConnection();
     return await db.select().from(announcements).where(eq(announcements.isActive, true));
   }
 
@@ -1059,6 +1089,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteAnnouncement(id: number): Promise<boolean> {
+    this.checkDbConnection();
     const result = await db.delete(announcements).where(eq(announcements.id, id));
     return (result.rowCount || 0) > 0;
   }
