@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth, AuthProvider } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/auth/landing";
 import Home from "@/pages/home";
@@ -33,10 +34,11 @@ function App() {
         <AuthProvider>
           <div className="min-h-screen flex flex-col">
             <Navigation />
-            <main className="flex-1">
+            <main className="flex-1 pb-16 md:pb-0">
               <Router />
             </main>
             <Footer />
+            <MobileBottomNav />
           </div>
           <Toaster />
         </AuthProvider>

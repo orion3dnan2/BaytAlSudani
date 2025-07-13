@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import ServiceCard from "@/components/ServiceCard";
+import CTAButton from "@/components/CTAButton";
+import EmptyState from "@/components/EmptyState";
 import { 
   Select, 
   SelectContent, 
@@ -221,6 +224,11 @@ export default function Services() {
             </div>
           )}
 
+          {/* Add Service CTA */}
+          <div className="mb-6 flex justify-end">
+            <CTAButton type="service" />
+          </div>
+
           {/* Services Grid/List */}
           {filteredServices && filteredServices.length > 0 ? (
             <div className={`grid gap-6 ${
@@ -229,94 +237,23 @@ export default function Services() {
                 : "grid-cols-1"
             }`}>
               {filteredServices.map((service) => (
-                <Card key={service.id} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      {/* Service Header */}
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
-                            {service.name}
-                          </h3>
-                          <p className="text-gray-600 leading-relaxed">
-                            {service.description}
-                          </p>
-                        </div>
-                        <div className="w-12 h-12 bg-sudan-blue/10 rounded-full flex items-center justify-center mr-4">
-                          <Wrench className="w-6 h-6 text-sudan-blue" />
-                        </div>
-                      </div>
-
-                      {/* Service Info */}
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <DollarSign className="w-5 h-5 text-green-600" />
-                          <span className="text-2xl font-bold text-green-600">
-                            {service.price} جنيه
-                          </span>
-                        </div>
-
-                        <div className="flex items-center space-x-2 space-x-reverse text-sm text-gray-500">
-                          <Settings className="w-4 h-4" />
-                          <span>فئة: {service.category}</span>
-                        </div>
-
-                        <div className="flex items-center space-x-2 space-x-reverse text-sm text-gray-500">
-                          <Clock className="w-4 h-4" />
-                          <span>مضاف منذ: {new Date(service.createdAt).toLocaleDateString('ar-SA')}</span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <Badge 
-                            variant={service.isActive ? "default" : "secondary"}
-                            className={service.isActive ? "bg-green-100 text-green-800" : ""}
-                          >
-                            {service.isActive ? "متاح الآن" : "غير متاح"}
-                          </Badge>
-                          
-                          <div className="flex items-center space-x-1 space-x-reverse">
-                            {[...Array(5)].map((_, i) => (
-                              <Star 
-                                key={i} 
-                                className={`w-4 h-4 ${i < 4 ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                              />
-                            ))}
-                            <span className="text-sm text-gray-500 mr-1">(4.0)</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex space-x-3 space-x-reverse pt-4">
-                        <Button 
-                          className="flex-1 bg-sudan-blue hover:bg-sudan-blue/90"
-                          disabled={!service.isActive}
-                        >
-                          <Phone className="w-4 h-4 mr-2" />
-                          طلب الخدمة
-                        </Button>
-                        <Button variant="outline" size="icon">
-                          <Mail className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ServiceCard 
+                  key={service.id} 
+                  service={service} 
+                  storeName={`متجر رقم ${service.storeId}`}
+                />
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                لا توجد خدمات
-              </h3>
-              <p className="text-gray-600">
-                {searchQuery || selectedCategory !== "all" 
-                  ? "لا توجد خدمات تطابق البحث المحدد"
-                  : "لا توجد خدمات متاحة حالياً"
-                }
-              </p>
-            </div>
+            <EmptyState
+              type="services"
+              title="لا توجد خدمات متاحة"
+              description={searchQuery || selectedCategory !== "all" 
+                ? "لا توجد خدمات تطابق البحث المحدد"
+                : "لا توجد خدمات متاحة حالياً"
+              }
+              icon={<Settings className="w-16 h-16" />}
+            />
           )}
         </div>
       </section>

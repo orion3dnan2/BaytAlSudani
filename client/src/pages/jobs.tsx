@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import JobCard from "@/components/JobCard";
+import CTAButton from "@/components/CTAButton";
+import EmptyState from "@/components/EmptyState";
 import { 
   Select, 
   SelectContent, 
@@ -240,6 +243,11 @@ export default function Jobs() {
             </div>
           )}
 
+          {/* Add Job CTA */}
+          <div className="mb-6 flex justify-end">
+            <CTAButton type="job" />
+          </div>
+
           {/* Jobs Grid/List */}
           {filteredJobs && filteredJobs.length > 0 ? (
             <div className={`grid gap-6 ${
@@ -248,104 +256,23 @@ export default function Jobs() {
                 : "grid-cols-1"
             }`}>
               {filteredJobs.map((job) => (
-                <Card key={job.id} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      {/* Job Header */}
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
-                            {job.title}
-                          </h3>
-                          <p className="text-gray-600 leading-relaxed mb-3">
-                            {job.description}
-                          </p>
-                        </div>
-                        <div className="w-12 h-12 bg-sudan-blue/10 rounded-full flex items-center justify-center mr-4">
-                          <Briefcase className="w-6 h-6 text-sudan-blue" />
-                        </div>
-                      </div>
-
-                      {/* Job Info */}
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <DollarSign className="w-5 h-5 text-green-600" />
-                          <span className="text-2xl font-bold text-green-600">
-                            {job.salary} جنيه/شهر
-                          </span>
-                        </div>
-
-                        <div className="flex items-center space-x-2 space-x-reverse text-sm text-gray-500">
-                          <MapPin className="w-4 h-4" />
-                          <span>{job.location}</span>
-                        </div>
-
-                        <div className="flex items-center space-x-2 space-x-reverse text-sm text-gray-500">
-                          <Building className="w-4 h-4" />
-                          <span>متجر رقم: {job.storeId}</span>
-                        </div>
-
-                        <div className="flex items-center space-x-2 space-x-reverse text-sm text-gray-500">
-                          <Calendar className="w-4 h-4" />
-                          <span>نشر في: {new Date(job.createdAt).toLocaleDateString('ar-SA')}</span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <Badge 
-                            variant={job.isActive ? "default" : "secondary"}
-                            className={job.isActive ? "bg-green-100 text-green-800" : ""}
-                          >
-                            {job.isActive ? "مفتوح للتقديم" : "مغلق"}
-                          </Badge>
-                          
-                          <div className="flex items-center space-x-1 space-x-reverse text-sm text-gray-500">
-                            <Users className="w-4 h-4" />
-                            <span>15 متقدم</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Job Requirements Preview */}
-                      <div className="bg-gray-50 rounded-lg p-3">
-                        <h4 className="font-semibold text-sm text-gray-700 mb-2">المتطلبات الأساسية:</h4>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          <li>• خبرة في المجال لا تقل عن سنتين</li>
-                          <li>• إجادة اللغة العربية والإنجليزية</li>
-                          <li>• مهارات التواصل الممتازة</li>
-                        </ul>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex space-x-3 space-x-reverse pt-4">
-                        <Button 
-                          className="flex-1 bg-sudan-blue hover:bg-sudan-blue/90"
-                          disabled={!job.isActive}
-                        >
-                          <Send className="w-4 h-4 mr-2" />
-                          تقدم للوظيفة
-                        </Button>
-                        <Button variant="outline">
-                          عرض التفاصيل
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <JobCard 
+                  key={job.id} 
+                  job={job} 
+                  storeName={`متجر رقم ${job.storeId}`}
+                />
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <Briefcase className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                لا توجد وظائف
-              </h3>
-              <p className="text-gray-600">
-                {searchQuery || selectedCategory !== "all" || selectedLocation !== "all"
-                  ? "لا توجد وظائف تطابق البحث المحدد"
-                  : "لا توجد وظائف متاحة حالياً"
-                }
-              </p>
-            </div>
+            <EmptyState
+              type="jobs"
+              title="لا توجد وظائف متاحة"
+              description={searchQuery || selectedCategory !== "all" || selectedLocation !== "all"
+                ? "لا توجد وظائف تطابق البحث المحدد"
+                : "لا توجد وظائف متاحة حالياً"
+              }
+              icon={<Briefcase className="w-16 h-16" />}
+            />
           )}
         </div>
       </section>
