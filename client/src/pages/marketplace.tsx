@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/AuthContext";
 import sudaneseMarketImage from "@assets/sudanese-market.jpg";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -33,6 +34,7 @@ export default function Marketplace() {
   const [sortBy, setSortBy] = useState("newest");
   const [activeTab, setActiveTab] = useState<"products" | "stores">("products");
   const [isMobile, setIsMobile] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -52,6 +54,9 @@ export default function Marketplace() {
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ['/api/products'],
   });
+
+  // Get user's stores for edit permissions
+  const userStores = stores?.filter(store => store.ownerId === user?.id?.toString()) || [];
 
   const categories = [
     { value: "all", label: "جميع الفئات" },
@@ -274,6 +279,8 @@ export default function Marketplace() {
                       viewMode={viewMode}
                       compact={isMobile}
                       className={viewMode === "list" ? "md:flex md:items-center" : ""}
+                      showEditButton={user?.role === 'admin' || user?.role === 'store_owner'}
+                      userStores={userStores}
                     />
                   ))}
                 </div>
@@ -308,6 +315,7 @@ export default function Marketplace() {
                       key={store.id} 
                       store={store} 
                       className={viewMode === "list" ? "md:flex md:items-center" : ""}
+                      showEditButton={user?.role === 'admin' || user?.role === 'store_owner'}
                     />
                   ))}
                 </div>

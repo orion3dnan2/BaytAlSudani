@@ -12,18 +12,22 @@ import {
   Clock,
   Heart,
   Eye,
+  Edit,
   Store as StoreIcon
 } from 'lucide-react';
 import { Store } from '@shared/schema';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface StoreCardProps {
   store: Store;
   className?: string;
+  showEditButton?: boolean;
 }
 
-export default function StoreCard({ store, className = '' }: StoreCardProps) {
+export default function StoreCard({ store, className = '', showEditButton = false }: StoreCardProps) {
   const [isFollowed, setIsFollowed] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const { user } = useAuth();
 
   const handleToggleFollow = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -154,27 +158,54 @@ export default function StoreCard({ store, className = '' }: StoreCardProps) {
         {/* Actions */}
         <CardFooter className="p-4 pt-0">
           <div className="flex space-x-2 space-x-reverse w-full">
-            <Button
-              onClick={handleToggleFollow}
-              variant={isFollowed ? 'default' : 'outline'}
-              className={`flex-1 ${isFollowed 
-                ? 'bg-sudan-blue hover:bg-sudan-blue/90 text-white' 
-                : 'border-sudan-blue text-sudan-blue hover:bg-sudan-blue hover:text-white'
-              }`}
-            >
-              <Heart className={`w-4 h-4 mr-2 ${isFollowed ? 'fill-current' : ''}`} />
-              {isFollowed ? 'متابع' : 'متابعة'}
-            </Button>
-            <Button
-              variant="outline"
-              className="flex-1 border-sudan-gold text-sudan-gold hover:bg-sudan-gold hover:text-white"
-              asChild
-            >
-              <Link href={`/store/${store.id}`}>
-                <Eye className="w-4 h-4 mr-2" />
-                زيارة المتجر
-              </Link>
-            </Button>
+            {showEditButton && (user?.role === 'admin' || user?.id?.toString() === store.ownerId?.toString()) ? (
+              <>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-green-500 text-green-600 hover:bg-green-500 hover:text-white"
+                  asChild
+                >
+                  <Link href={`/stores/edit/${store.id}`}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    تعديل
+                  </Link>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-sudan-gold text-sudan-gold hover:bg-sudan-gold hover:text-white"
+                  asChild
+                >
+                  <Link href={`/store/${store.id}`}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    عرض
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleToggleFollow}
+                  variant={isFollowed ? 'default' : 'outline'}
+                  className={`flex-1 ${isFollowed 
+                    ? 'bg-sudan-blue hover:bg-sudan-blue/90 text-white' 
+                    : 'border-sudan-blue text-sudan-blue hover:bg-sudan-blue hover:text-white'
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 mr-2 ${isFollowed ? 'fill-current' : ''}`} />
+                  {isFollowed ? 'متابع' : 'متابعة'}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-sudan-gold text-sudan-gold hover:bg-sudan-gold hover:text-white"
+                  asChild
+                >
+                  <Link href={`/store/${store.id}`}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    زيارة المتجر
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </CardFooter>
       </div>

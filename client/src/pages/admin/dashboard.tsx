@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Store, Package, Briefcase, Bell, Settings, ArrowRight } from "lucide-react";
+import { Users, Store, Package, Briefcase, Bell, Settings, ArrowRight, Plus, Shield } from "lucide-react";
 import { Link } from "wouter";
 
 export default function AdminDashboard() {
@@ -65,12 +65,20 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">لوحة تحكم المسؤول</h1>
             <p className="text-gray-600">مرحباً بك في لوحة التحكم الرئيسية</p>
           </div>
-          <Link href="/">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowRight className="w-4 h-4" />
-              العودة للصفحة الرئيسية
-            </Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link href="/admin/requests">
+              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                إدارة الطلبات
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button variant="outline" className="flex items-center gap-2">
+                <ArrowRight className="w-4 h-4" />
+                العودة للصفحة الرئيسية
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Stats Cards */}

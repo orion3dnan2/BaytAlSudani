@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Store, Package, Briefcase, Bell, ArrowRight, Plus } from "lucide-react";
+import { Store, Package, Briefcase, Bell, ArrowRight, Plus, Edit, Eye } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -139,9 +139,23 @@ export default function MerchantDashboard() {
                             <p>الفئة: {store.category}</p>
                             <p>العنوان: {store.address}</p>
                           </div>
-                          <Badge variant={store.isActive ? 'default' : 'destructive'} className="mt-2">
+                          <Badge variant={store.isActive ? 'default' : 'destructive'} className="mt-2 mb-3">
                             {store.isActive ? 'نشط' : 'غير نشط'}
                           </Badge>
+                          <div className="flex gap-2 mt-3">
+                            <Button variant="outline" size="sm" asChild className="flex-1 border-green-500 text-green-600 hover:bg-green-500 hover:text-white">
+                              <Link href={`/stores/edit/${store.id}`}>
+                                <Edit className="w-4 h-4 mr-1" />
+                                تعديل
+                              </Link>
+                            </Button>
+                            <Button variant="outline" size="sm" asChild className="flex-1">
+                              <Link href={`/store/${store.id}`}>
+                                <Eye className="w-4 h-4 mr-1" />
+                                عرض
+                              </Link>
+                            </Button>
+                          </div>
                         </CardContent>
                       </Card>
                     ))}
@@ -183,9 +197,23 @@ export default function MerchantDashboard() {
                             <p className="text-lg font-bold text-purple-600">{product.price} جنيه</p>
                             <p className="text-sm text-gray-500">الفئة: {product.category}</p>
                           </div>
-                          <Badge variant={product.isActive ? 'default' : 'destructive'} className="mt-2">
+                          <Badge variant={product.isActive ? 'default' : 'destructive'} className="mt-2 mb-3">
                             {product.isActive ? 'متوفر' : 'غير متوفر'}
                           </Badge>
+                          <div className="flex gap-2 mt-3">
+                            <Button variant="outline" size="sm" asChild className="flex-1 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white">
+                              <Link href={`/products/edit/${product.id}`}>
+                                <Edit className="w-4 h-4 mr-1" />
+                                تعديل
+                              </Link>
+                            </Button>
+                            <Button variant="outline" size="sm" asChild className="flex-1">
+                              <Link href={`/product/${product.id}`}>
+                                <Eye className="w-4 h-4 mr-1" />
+                                عرض
+                              </Link>
+                            </Button>
+                          </div>
                         </CardContent>
                       </Card>
                     ))}

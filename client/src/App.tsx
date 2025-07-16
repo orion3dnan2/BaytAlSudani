@@ -19,11 +19,14 @@ import Announcements from "@/pages/announcements";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
 import AdminDashboard from "@/pages/admin/dashboard";
+import AdminRequests from "@/pages/admin/requests";
 import StoreDetails from "@/pages/admin/store-details";
 import MerchantDashboard from "@/pages/merchant/dashboard";
 import Profile from "@/pages/profile";
 import CreateProduct from "@/pages/products/create";
+import EditProduct from "@/pages/products/edit";
 import CreateStore from "@/pages/stores/create";
+import EditStore from "@/pages/stores/edit";
 import HandleLink from "@/pages/handle-link";
 import ImportData from "@/pages/import-data";
 
@@ -73,9 +76,12 @@ function Router() {
           <Route path="/profile" component={Profile} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/admin/stores/:id" component={StoreDetails} />
+          <Route path="/admin/requests" component={AdminRequests} />
           <Route path="/merchant/dashboard" component={MerchantDashboard} />
           <Route path="/products/create" component={CreateProduct} />
           <Route path="/stores/create" component={CreateStore} />
+          <Route path="/stores/edit/:id" component={EditStore} />
+          <Route path="/products/edit/:id" component={EditProduct} />
         </>
       )}
       

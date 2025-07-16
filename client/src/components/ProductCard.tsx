@@ -10,9 +10,11 @@ import {
   Eye, 
   Share2,
   MapPin,
-  Clock
+  Clock,
+  Edit
 } from 'lucide-react';
 import { Product } from '@shared/schema';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ProductCardProps {
   product: Product;
@@ -20,6 +22,8 @@ interface ProductCardProps {
   className?: string;
   compact?: boolean;
   viewMode?: 'grid' | 'list';
+  showEditButton?: boolean;
+  userStores?: any[];
 }
 
 export default function ProductCard({ 
@@ -27,10 +31,13 @@ export default function ProductCard({
   showStore = true, 
   className = '', 
   compact = false,
-  viewMode = 'grid'
+  viewMode = 'grid',
+  showEditButton = false,
+  userStores = []
 }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const { user } = useAuth();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,6 +63,12 @@ export default function ProductCard({
       maximumFractionDigits: 0,
     }).format(price);
   };
+
+  // Check if user can edit this product
+  const canEdit = user && (
+    user.role === 'admin' || 
+    userStores.some(store => store.id === product.storeId)
+  );
 
   const getRandomImage = () => {
     const categories = ['electronics', 'fashion', 'home', 'restaurants-cafes', 'books', 'sports'];
@@ -390,22 +403,49 @@ export default function ProductCard({
         {/* Actions */}
         <CardFooter className="p-4 pt-0">
           <div className="flex space-x-2 space-x-reverse w-full">
-            <Button
-              onClick={handleAddToCart}
-              className="flex-1 bg-sudan-blue hover:bg-sudan-blue/90 text-white"
-            >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              أضف للسلة
-            </Button>
-            <Button
-              variant="outline"
-              className="flex-1 border-sudan-blue text-sudan-blue hover:bg-sudan-blue hover:text-white"
-              asChild
-            >
-              <Link href={`/product/${product.id}`}>
-                عرض التفاصيل
-              </Link>
-            </Button>
+            {showEditButton && canEdit ? (
+              <>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-green-500 text-green-600 hover:bg-green-500 hover:text-white"
+                  asChild
+                >
+                  <Link href={`/products/edit/${product.id}`}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    تعديل
+                  </Link>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-sudan-blue text-sudan-blue hover:bg-sudan-blue hover:text-white"
+                  asChild
+                >
+                  <Link href={`/product/${product.id}`}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    عرض
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleAddToCart}
+                  className="flex-1 bg-sudan-blue hover:bg-sudan-blue/90 text-white"
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  أضف للسلة
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-sudan-blue text-sudan-blue hover:bg-sudan-blue hover:text-white"
+                  asChild
+                >
+                  <Link href={`/product/${product.id}`}>
+                    عرض التفاصيل
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </CardFooter>
       </div>

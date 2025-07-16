@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/AuthContext";
 import sudaneseMarketImage from "@assets/sudanese-market.jpg";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ export default function Stores() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("newest");
+  const { user } = useAuth();
 
   const { data: stores, isLoading, refetch } = useQuery({
     queryKey: ['/api/stores'],
@@ -206,7 +208,11 @@ export default function Stores() {
                 : "grid-cols-1"
             }`}>
               {filteredStores.map((store) => (
-                <StoreCard key={store.id} store={store} />
+                <StoreCard 
+                  key={store.id} 
+                  store={store} 
+                  showEditButton={user?.role === 'admin' || user?.role === 'store_owner'} 
+                />
               ))}
             </div>
           ) : (
